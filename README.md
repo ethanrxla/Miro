@@ -1,6 +1,8 @@
 # Miro
 Miro's Tower Escape: Last One Standing
 
+Soundtrack planning: [proposed music spec](docs/MUSIC_SPEC.md). Candidate beats are in `soundselection/beats` (Git LFS); run `git lfs pull` after cloning. Music-system work is proposed, not implemented.
+
 **Fran's playtesting:** [handoff and checklist](docs/FRAN_PLAYTEST_HANDOFF.md) · [report template](docs/PLAYTEST_REPORT_TEMPLATE.md) · [coding-agent prompt](docs/FRAN_AGENT_PROMPT.md).
 
 Godot 4.7 / Forward+. Main scene: `scenes/intro.tscn`.

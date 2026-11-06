@@ -1,0 +1,262 @@
+[gd_scene format=4]
+
+[ext_resource type="Script" path="res://scripts/intro_level.gd" id="1_xwriy"]
+[ext_resource type="Script" path="res://scripts/prison_art.gd" id="2_u5myo"]
+[ext_resource type="Texture2D" path="res://assets/environment/standard_tile.png" id="3_u05oh"]
+[ext_resource type="Texture2D" path="res://assets/environment/cracked_tile.png" id="4_epycs"]
+[ext_resource type="Texture2D" path="res://assets/environment/connector.png" id="5_ge50m"]
+[ext_resource type="Script" path="res://scripts/intro_area.gd" id="6_17bgi"]
+[ext_resource type="PackedScene" path="res://scenes/cover_zone.tscn" id="7_dryi7"]
+[ext_resource type="PackedScene" path="res://scenes/ladder.tscn" id="8_5pmge"]
+[ext_resource type="PackedScene" path="res://scenes/sigil_anchor.tscn" id="9_hai50"]
+[ext_resource type="PackedScene" path="res://scenes/level_exit.tscn" id="10_kh17o"]
+[ext_resource type="PackedScene" path="res://scenes/guard.tscn" id="11_urird"]
+[ext_resource type="Script" path="res://scripts/intro_guard.gd" id="12_t5vr6"]
+[ext_resource type="PackedScene" path="res://scenes/intro_player.tscn" id="13_4vp3x"]
+[ext_resource type="Script" path="res://scripts/intro_player.gd" id="14_sg54v"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_goqta"]
+texture = ExtResource("3_u05oh")
+texture_region_size = Vector2i(28, 27)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-14, -14, 14, -14, 14, 14, -14, 14)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_cj32t"]
+texture = ExtResource("4_epycs")
+texture_region_size = Vector2i(28, 27)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-14, -14, 14, -14, 14, 14, -14, 14)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8idrm"]
+texture = ExtResource("5_ge50m")
+texture_region_size = Vector2i(28, 27)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-14, -14, 14, -14, 14, 14, -14, 14)
+
+[sub_resource type="TileSet" id="TileSet_yj5im"]
+tile_size = Vector2i(28, 28)
+physics_layer_0/collision_layer = 1
+physics_layer_0/collision_mask = 6
+sources/0 = SubResource("TileSetAtlasSource_goqta")
+sources/1 = SubResource("TileSetAtlasSource_cj32t")
+sources/2 = SubResource("TileSetAtlasSource_8idrm")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h7rjp"]
+size = Vector2(28, 756)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6ac85"]
+size = Vector2(28, 756)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lm4bj"]
+size = Vector2(8, 112)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x2gsc"]
+size = Vector2(54, 30)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_366e5"]
+size = Vector2(16, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_38pnl"]
+size = Vector2(44, 55)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y6kq6"]
+size = Vector2(22, 30)
+
+[node name="ThePrisoner" type="Node2D" unique_id=1543566886]
+texture_filter = 1
+script = ExtResource("1_xwriy")
+
+[node name="Architecture" type="Node2D" parent="." unique_id=1459736641]
+script = ExtResource("2_u5myo")
+
+[node name="StoneFloors" type="TileMapLayer" parent="." unique_id=1352236850]
+tile_map_data = PackedByteArray("AAABAAkAAAAAAAAAAAABABgAAAAAAAAAAAACAAkAAAAAAAAAAAACABgAAAAAAAAAAAADAAkAAAAAAAAAAAADABgAAAAAAAAAAAAEAAkAAAAAAAAAAAAEABgAAAAAAAAAAAAFAAkAAAAAAAAAAAAFABgAAAAAAAAAAAAGAAkAAAAAAAAAAAAGABgAAAAAAAAAAAAHAAkAAQAAAAAAAAAHABgAAAAAAAAAAAAIAAkAAAAAAAAAAAAIABgAAAAAAAAAAAAJAAkAAAAAAAAAAAAJABgAAQAAAAAAAAAKAAkAAAAAAAAAAAAKABgAAAAAAAAAAAALAAkAAgAAAAAAAAALABgAAAAAAAAAAAAMAAkAAAAAAAAAAAAMABAAAAAAAAAAAAAMABgAAAAAAAAAAAANAAkAAAAAAAAAAAANABAAAAAAAAAAAAANABgAAAAAAAAAAAAOAAkAAQAAAAAAAAAOABAAAAAAAAAAAAAOABgAAAAAAAAAAAAPAAkAAAAAAAAAAAAPABAAAAAAAAAAAAAPABgAAAAAAAAAAAAQAAkAAAAAAAAAAAAQABAAAQAAAAAAAAAQABgAAAAAAAAAAAARAAkAAAAAAAAAAAARABAAAAAAAAAAAAARABgAAAAAAAAAAAASAAkAAAAAAAAAAAASABAAAAAAAAAAAAASABgAAQAAAAAAAAATAAkAAAAAAAAAAAATABAAAAAAAAAAAAATABgAAAAAAAAAAAAUAAkAAAAAAAAAAAAUABAAAAAAAAAAAAAUABgAAAAAAAAAAAAVAAkAAQAAAAAAAAAVABAAAAAAAAAAAAAVABgAAAAAAAAAAAAWAAkAAgAAAAAAAAAWABAAAAAAAAAAAAAWABgAAAAAAAAAAAAXAAkAAAAAAAAAAAAXABAAAAAAAAAAAAAXABgAAAAAAAAAAAAYAAkAAAAAAAAAAAAYABAAAQAAAAAAAAAYABgAAAAAAAAAAAAZABAAAAAAAAAAAAAZABgAAAAAAAAAAAAaABAAAAAAAAAAAAAaABgAAAAAAAAAAAAbAAkAAAAAAAAAAAAbABAAAAAAAAAAAAAbABgAAQAAAAAAAAAcAAkAAQAAAAAAAAAcABAAAAAAAAAAAAAcABgAAAAAAAAAAAAdAAkAAAAAAAAAAAAdABAAAAAAAAAAAAAdABgAAAAAAAAAAAAeAAkAAAAAAAAAAAAeABAAAAAAAAAAAAAeABgAAAAAAAAAAAAfAAkAAAAAAAAAAAAfABAAAAAAAAAAAAAfABgAAAAAAAAAAAAgAAkAAAAAAAAAAAAgABAAAQAAAAAAAAAgABgAAAAAAAAAAAAhAAkAAgAAAAAAAAAhABAAAAAAAAAAAAAhABgAAAAAAAAAAAAiAAkAAAAAAAAAAAAiABAAAAAAAAAAAAAiABgAAAAAAAAAAAAjAAkAAQAAAAAAAAAjABAAAAAAAAAAAAAjABgAAAAAAAAAAAAkAAkAAAAAAAAAAAAkABAAAAAAAAAAAAAkABgAAQAAAAAAAAAlAAkAAAAAAAAAAAAlABAAAAAAAAAAAAAlABgAAAAAAAAAAAAmAAkAAAAAAAAAAAAmABAAAAAAAAAAAAAmABgAAAAAAAAAAAAPAAgAAQAAAAAAAAAQAAgAAAAAAAAAAAARAAcAAAAAAAAAAAASAAcAAQAAAAAAAAATAAcAAAAAAAAAAAAUAAcAAAAAAAAAAAAfAA4AAAAAAAAAAAAgAA4AAAAAAAAAAAAhAA0AAQAAAAAAAAAiAA0AAAAAAAAAAAAPABYAAQAAAAAAAAAQABYAAAAAAAAAAAAYAA8AAQAAAAAAAAAXAA8AAAAAAAAAAAAWAA4AAAAAAAAAAAAVAA4AAQAAAAAAAAAUAA4AAAAAAAAAAAATAA4AAAAAAAAAAAAbABcAAQAAAAAAAAAaABcAAAAAAAAAAAAcABYAAAAAAAAAAAAdABYAAAAAAAAAAAAeABYAAQAAAAAAAAAfABYAAAAAAAAAAAA=")
+tile_set = SubResource("TileSet_yj5im")
+
+[node name="LeftWall" type="StaticBody2D" parent="." unique_id=1353121275]
+position = Vector2(14, 378)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall" unique_id=681073651]
+shape = SubResource("RectangleShape2D_h7rjp")
+
+[node name="RightWall" type="StaticBody2D" parent="." unique_id=661152267]
+position = Vector2(1106, 378)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall" unique_id=1627256360]
+shape = SubResource("RectangleShape2D_6ac85")
+
+[node name="CellDoor" type="StaticBody2D" parent="." unique_id=599289678]
+position = Vector2(253, 196)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CellDoor" unique_id=212877847]
+shape = SubResource("RectangleShape2D_lm4bj")
+
+[node name="Interactables" type="Node2D" parent="." unique_id=102917503]
+
+[node name="Bed" type="Area2D" parent="Interactables" unique_id=797371687]
+position = Vector2(112, 239)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("6_17bgi")
+kind = "bed"
+area_size = Vector2(54, 30)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Bed" unique_id=88417168]
+shape = SubResource("RectangleShape2D_x2gsc")
+
+[node name="CellLock" type="Area2D" parent="Interactables" unique_id=73705438]
+position = Vector2(253, 220)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("6_17bgi")
+kind = "door"
+area_size = Vector2(16, 64)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/CellLock" unique_id=446891410]
+shape = SubResource("RectangleShape2D_366e5")
+
+[node name="CellShadow" type="Area2D" parent="Interactables" unique_id=1383928609 instance=ExtResource("7_dryi7")]
+position = Vector2(180, 216)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("6_17bgi")
+area_size = Vector2(65, 72)
+
+[node name="FirstRefuge" type="Area2D" parent="Interactables" unique_id=374764562 instance=ExtResource("7_dryi7")]
+position = Vector2(322, 216)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("6_17bgi")
+area_size = Vector2(52, 72)
+
+[node name="GalleryShadow" type="Area2D" parent="Interactables" unique_id=1334239585 instance=ExtResource("7_dryi7")]
+position = Vector2(385, 216)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("6_17bgi")
+area_size = Vector2(60, 72)
+
+[node name="StairShadow" type="Area2D" parent="Interactables" unique_id=1520345944 instance=ExtResource("7_dryi7")]
+position = Vector2(660, 216)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("6_17bgi")
+area_size = Vector2(62, 72)
+
+[node name="FirstLadder" type="Area2D" parent="Interactables" unique_id=2014129660 instance=ExtResource("8_5pmge")]
+position = Vector2(728, 335)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("6_17bgi")
+kind = "ladder"
+area_size = Vector2(40, 230)
+
+[node name="LandingShadow" type="Area2D" parent="Interactables" unique_id=2096499568 instance=ExtResource("7_dryi7")]
+position = Vector2(780, 412)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("6_17bgi")
+area_size = Vector2(65, 72)
+
+[node name="PassageShadow" type="Area2D" parent="Interactables" unique_id=1367942624 instance=ExtResource("7_dryi7")]
+position = Vector2(400, 412)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("6_17bgi")
+area_size = Vector2(64, 72)
+
+[node name="SecondLadder" type="Area2D" parent="Interactables" unique_id=1202313566 instance=ExtResource("8_5pmge")]
+position = Vector2(308, 550)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("6_17bgi")
+kind = "ladder"
+area_size = Vector2(40, 252)
+
+[node name="LowerShadow" type="Area2D" parent="Interactables" unique_id=728502401 instance=ExtResource("7_dryi7")]
+position = Vector2(740, 636)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("6_17bgi")
+area_size = Vector2(70, 72)
+
+[node name="ExitShadow" type="Area2D" parent="Interactables" unique_id=409776577 instance=ExtResource("7_dryi7")]
+position = Vector2(990, 636)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("6_17bgi")
+area_size = Vector2(62, 72)
+
+[node name="SigilAnchor" type="Area2D" parent="Interactables" unique_id=1048147631 instance=ExtResource("9_hai50")]
+position = Vector2(620, 647)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("6_17bgi")
+kind = "sigil"
+area_size = Vector2(30, 50)
+
+[node name="StairGate" type="Area2D" parent="Interactables" unique_id=334871571 instance=ExtResource("10_kh17o")]
+position = Vector2(1043, 646)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("6_17bgi")
+kind = "exit"
+area_size = Vector2(46, 60)
+
+[node name="VoiceGate" type="Area2D" parent="Interactables" unique_id=235362724]
+position = Vector2(680, 226)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("6_17bgi")
+kind = "brother"
+area_size = Vector2(44, 55)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/VoiceGate" unique_id=226319291]
+shape = SubResource("RectangleShape2D_38pnl")
+
+[node name="QuarantineOrder" type="Area2D" parent="Interactables" unique_id=834464209]
+position = Vector2(870, 425)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("6_17bgi")
+kind = "note"
+area_size = Vector2(22, 30)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/QuarantineOrder" unique_id=1154416255]
+shape = SubResource("RectangleShape2D_y6kq6")
+
+[node name="Guards" type="Node2D" parent="." unique_id=75964164]
+
+[node name="CorruptKeeper" type="CharacterBody2D" parent="Guards" unique_id=2121812699 instance=ExtResource("11_urird")]
+position = Vector2(280, 236)
+collision_layer = 4
+script = ExtResource("12_t5vr6")
+patrol_left = 280.0
+patrol_right = 365.0
+sick_guard = true
+
+[node name="GalleryKeeper" type="CharacterBody2D" parent="Guards" unique_id=119544865 instance=ExtResource("11_urird")]
+position = Vector2(580, 236)
+collision_layer = 4
+script = ExtResource("12_t5vr6")
+patrol_left = 550.0
+patrol_right = 650.0
+
+[node name="PassageKeeper" type="CharacterBody2D" parent="Guards" unique_id=1744268618 instance=ExtResource("11_urird")]
+position = Vector2(600, 432)
+collision_layer = 4
+script = ExtResource("12_t5vr6")
+patrol_left = 470.0
+patrol_right = 680.0
+
+[node name="LowerKeeper" type="CharacterBody2D" parent="Guards" unique_id=258569936 instance=ExtResource("11_urird")]
+position = Vector2(855, 656)
+collision_layer = 4
+script = ExtResource("12_t5vr6")
+patrol_left = 810.0
+patrol_right = 950.0
+
+[node name="Player" type="CharacterBody2D" parent="." unique_id=975158124 instance=ExtResource("13_4vp3x")]
+position = Vector2(140, 236)
+collision_layer = 2
+script = ExtResource("14_sg54v")

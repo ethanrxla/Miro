@@ -1,0 +1,388 @@
+extends Node2D
+## The first floor only. Story flags stay local so R restores the entry state.
+
+@onready var player: IntroPlayer = $Player
+@onready var areas: Node2D = $Interactables
+var door_open: bool = false
+var sigil_placed: bool = false
+var brother_heard: bool = false
+var completed: bool = false
+var paused: bool = false
+var route: String = ""
+var dialogue: Array = []
+var dialogue_index: int = 0
+var dialogue_event: String = ""
+var message: String = ""
+var message_left: float = 0.0
+var elapsed: float = 0.0
+var hud: CanvasLayer
+var status_label: Label
+var objective_label: Label
+var hint_label: Label
+var message_label: Label
+var dialogue_panel: PanelContainer
+var dialogue_label: Label
+var overlay: PanelContainer
+var overlay_label: Label
+var shot_flash: float = 0.0
+
+func _ready() -> void:
+	process_mode = Node.PROCESS_MODE_ALWAYS
+	setup_inputs()
+	player.level = self
+	for guard in guards():
+		guard.level = self
+	build_hud()
+	start_dialogue([
+		["MIRO", "Stone. Iron. A name scratched into the bed: Miro.\nMine... I think. Nothing before this room."],
+		["KEEPER", "Awake again? The Keepers call you a traitor.\nI call you late with my payment. No coin, no medicine."],
+		["MIRO", "What medicine? What happened to me?"],
+		["KEEPER", "Don't play innocent. I know you...\nWait. That taste... I can't..."],
+		["MIRO", "His hands are shaking. The same marks as the others.\nHe's turned away. This might be my only chance."]
+	], "intro")
+
+func setup_inputs() -> void:
+	var bindings := {"move_left": [KEY_A, KEY_LEFT], "move_right": [KEY_D, KEY_RIGHT], "climb_up": [KEY_W, KEY_UP], "climb_down": [KEY_S, KEY_DOWN], "jump": [KEY_SPACE], "dodge": [KEY_C], "attack": [KEY_1], "cloak": [KEY_2], "explosive": [KEY_3], "fire": [KEY_4], "interact": [KEY_E], "advance": [KEY_ENTER], "skip": [KEY_TAB], "pause_game": [KEY_ESCAPE], "retry": [KEY_R]}
+	for action in bindings:
+		if not InputMap.has_action(action):
+			InputMap.add_action(action)
+		for key in bindings[action]:
+			var event := InputEventKey.new()
+			event.physical_keycode = key
+			if not InputMap.action_has_event(action, event):
+				InputMap.action_add_event(action, event)
+
+func controls_locked() -> bool:
+	return paused or not dialogue.is_empty() or completed
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("retry") and not event.is_echo():
+		get_tree().paused = false
+		get_viewport().set_input_as_handled()
+		get_tree().reload_current_scene()
+	elif event.is_action_pressed("pause_game") and not completed:
+		paused = not paused
+		get_tree().paused = paused
+		get_viewport().set_input_as_handled()
+	elif not dialogue.is_empty() and not paused:
+		if event.is_action_pressed("advance") or event.is_action_pressed("interact"):
+			dialogue_index += 1
+			if dialogue_index >= dialogue.size():
+				finish_dialogue()
+			get_viewport().set_input_as_handled()
+		elif event.is_action_pressed("skip"):
+			finish_dialogue()
+			get_viewport().set_input_as_handled()
+	elif event.is_action_pressed("interact") and not event.is_echo():
+		interact()
+		get_viewport().set_input_as_handled()
+
+func _process(delta: float) -> void:
+	if not paused:
+		elapsed += delta
+		message_left = maxf(0, message_left - delta)
+		shot_flash = maxf(0, shot_flash - delta)
+	var pursuing := false
+	var searching := false
+	for guard in guards():
+		if not guard.is_dead:
+			pursuing = pursuing or (guard.sees_player and guard.alert_state == IntroGuard.State.ALERT)
+			searching = searching or guard.alert_state == IntroGuard.State.SEARCH or guard.alert_state == IntroGuard.State.SUSPICIOUS
+	player.detection_state = "SPOTTED" if pursuing else ("HIDDEN" if player.is_concealed else ("SEARCHING / unseen" if searching else "UNSEEN"))
+	status_label.text = "MIRO   " + "♥ ".repeat(maxi(0, player.health)) + "    " + player.detection_state + "\n" + ("1 Shank   2 Blanket   3 C4 ×%d   %s" % [player.c4_count, "Key" if player.has_key else "—"]) if player.has_supplies else "MIRO   ♥ ♥ ♥    CELL 07"
+	if player.has_gun:
+		status_label.text += "\n4  Keeper weapon ×%d" % player.ammunition
+	objective_label.text = objective()
+	hint_label.text = context_hint()
+	message_label.text = message if message_left > 0 else ""
+	dialogue_panel.visible = not dialogue.is_empty()
+	if not dialogue.is_empty():
+		var line: Array = dialogue[dialogue_index]
+		dialogue_label.text = "%s\n\n%s\n\n[E / Enter] Continue    [Tab] Skip" % [line[0], line[1]]
+	overlay.visible = paused or completed or player.is_dead
+	if completed:
+		overlay_label.text = "THE PRISONER\n\nThe first mark is set. Below, someone is coughing.\n\nEscape: %s   |   Casualties: %d\n\nEnd of the intro. Level 2 is not built yet.\n[R] Replay the floor" % [route, player.casualty_count]
+	elif player.is_dead:
+		overlay_label.text = "THE TOWER KEEPS ITS PRISONERS\n\n[R] Retry from the cell\nTry cover, a quiet key theft, or dodge the wind-up."
+	elif paused:
+		overlay_label.text = "PAUSED\n\nA / D  Move    Space  Jump    W / S  Ladders\nE  Interact / pickpocket    C  Dodge\n1  Shank    2  Blanket    3  C4    4  Looted gun\n\nStay still in shadow alcoves to conceal yourself.\nA body draws a search, not magical knowledge of you.\n\n[Esc] Resume    [R] Restart"
+	queue_redraw()
+
+func objective() -> String:
+	if completed:
+		return "01 / THE PRISONER   •   COMPLETE"
+	if not player.has_supplies:
+		return "01 / THE PRISONER\nSearch beneath your bed. [E]"
+	if not door_open:
+		return "Escape the cell\nSteal the key, use the shank, or breach the lock."
+	if not brother_heard:
+		return "Find a way down\nFollow the gallery to the barred gate."
+	if not sigil_placed:
+		return "Leave a mark\nDescend the ladders. Find the lower support."
+	return "The way below\nReach the lower-right stair gate. [E]"
+
+func start_dialogue(lines: Array, event: String = "") -> void:
+	dialogue = lines
+	dialogue_index = 0
+	dialogue_event = event
+	player.velocity = Vector2.ZERO
+
+func finish_dialogue() -> void:
+	var event := dialogue_event
+	dialogue = []
+	dialogue_index = 0
+	dialogue_event = ""
+	if event == "intro":
+		var guard: IntroGuard = $Guards/CorruptKeeper
+		guard.illness_started = true
+		guard.facing = 1
+		guard.turn_wait = 4.0
+		notify("The Keeper doubles over, coughing. Search your bed. [E]", 8)
+	elif event == "brother":
+		brother_heard = true
+
+func guards() -> Array[Node]:
+	return get_tree().get_nodes_in_group("guards")
+
+func in_cover(point: Vector2) -> bool:
+	for area in areas.get_children():
+		if area.kind == "cover" and area.contains(point):
+			return true
+	return false
+
+func ladder_at(point: Vector2):
+	for area in areas.get_children():
+		if area.kind == "ladder" and area.contains(point):
+			return area
+	return null
+
+func clear_sight(from: Vector2, to: Vector2) -> bool:
+	var query := PhysicsRayQueryParameters2D.create(from, to, 1)
+	return get_world_2d().direct_space_state.intersect_ray(query).is_empty()
+
+func has_floor_below(point: Vector2) -> bool:
+	var query := PhysicsRayQueryParameters2D.create(point, point + Vector2(0, 22), 1)
+	return not get_world_2d().direct_space_state.intersect_ray(query).is_empty()
+
+func can_melee_reach(from: Vector2, to: Vector2) -> bool:
+	# The cell bars permit a reach-through attack on the nearby keeper.
+	if not door_open and from.x < 253 and to.x > 253 and to.x < 291 and absf(from.y - to.y) < 25:
+		return true
+	return clear_sight(from, to)
+
+func closest_guard(maximum: float = 45.0):
+	var best = null
+	var distance := maximum
+	for guard in guards():
+		var candidate: float = guard.global_position.distance_to(player.global_position)
+		if candidate < distance and can_melee_reach(player.global_position, guard.global_position):
+			distance = candidate
+			best = guard
+	return best
+
+func nearby(kind: String, maximum: float = 48.0):
+	for area in areas.get_children():
+		if area.kind == kind and area.global_position.distance_to(player.global_position) < maximum:
+			return area
+	return null
+
+func context_hint() -> String:
+	if controls_locked() or player.is_dead:
+		return ""
+	if nearby("bed") and not player.has_supplies:
+		return "[E] Search beneath the bed"
+	var guard = closest_guard()
+	if guard:
+		if guard.is_dead and (not guard.gun_taken or (guard.sick_guard and not guard.key_taken)):
+			return "[E] Search fallen Keeper"
+		if guard.sick_guard and not guard.key_taken:
+			return "[E] Pickpocket when he turns away   /   [1] Shank   /   [3] Breach"
+	if nearby("door", 65) and not door_open:
+		return "[E] Unlock with key   /   [3] Breach with C4"
+	if nearby("sigil"):
+		return "The mark is set." if sigil_placed else "[E] Set your mark on the support"
+	if nearby("exit", 65):
+		return "[E] Descend" if sigil_placed else "Leave your mark at the support before descending."
+	if nearby("brother", 75) and not brother_heard:
+		return "[E] Listen at the barred gate"
+	if nearby("note"):
+		return "[E] Read the quarantine order"
+	if in_cover(player.global_position):
+		return "HIDDEN • moving or attacking reveals you" if player.is_concealed else "[2] Wrap yourself in the blanket. Stay still in shadow."
+	if ladder_at(player.global_position):
+		return "[W / S] Climb. Keepers cannot use ladders."
+	return "A / D  Move    Space  Jump    C  Dodge    Esc  Controls"
+
+func interact() -> void:
+	if controls_locked() or player.is_dead:
+		return
+	var bed = nearby("bed")
+	if bed and not player.has_supplies:
+		player.has_supplies = true
+		player.c4_count = 2
+		bed.activated = true
+		bed.queue_redraw()
+		start_dialogue([
+			["MIRO", "Wire. Powder. Two charges, hidden beneath the bed.\nI've been building these in secret. My hands remember; I don't."],
+			["MIRO", "A sharpened spoon. My blanket. Something I scratched\non the wrapping: 'Leave a mark. Keep going down.'"],
+			["ESCAPE", "[E] Take the key while the Keeper faces away.\n[1] Shank him within reach, or [3] breach the lock.\nOne charge is reserved for the mark below."]
+		])
+		return
+	var guard = closest_guard()
+	if guard and ((guard.is_dead and (not guard.gun_taken or (guard.sick_guard and not guard.key_taken))) or (guard.sick_guard and not guard.key_taken)):
+		if not player.has_supplies:
+			notify("Gather your hidden supplies before leaving.")
+			return
+		if guard.is_dead:
+			if guard.sick_guard and not guard.key_taken:
+				player.has_key = true
+				guard.key_taken = true
+				if route == "":
+					route = "shank"
+			if not guard.gun_taken:
+				player.has_gun = true
+				player.ammunition += 2
+				guard.gun_taken = true
+				notify("Taken: ammunition and a Keeper's weapon. [4] Fire; shots draw a search.")
+			else:
+				notify("Nothing else to take.")
+		elif guard.facing * (player.global_position.x - guard.global_position.x) < -6 and guard.alert_state != IntroGuard.State.ALERT:
+			guard.key_taken = true
+			player.has_key = true
+			route = "pickpocket"
+			notify("The key slips free. No one noticed. [E] at the lock to open it.")
+		else:
+			notify("He can see your hand. Wait until he turns his back.")
+		return
+	if nearby("door", 65) and not door_open:
+		if player.has_key:
+			open_door()
+			notify("A quiet click. Shadow alcoves can hide you: stand still and press 2.", 7)
+		else:
+			notify("Locked. Steal the key, loot the Keeper, or use C4 [3].")
+		return
+	if nearby("brother", 75) and not brother_heard:
+		start_brother()
+		return
+	if nearby("note"):
+		start_dialogue([["QUARANTINE ORDER", "No medicine without the Keeper's seal.\nNo names. Record the cell numbers only.\nTransfer all marked prisoners to the lower ward."]])
+		return
+	if nearby("sigil") and not sigil_placed:
+		if not player.has_supplies or player.c4_count < 1:
+			notify("The materials are hidden beneath your bed.")
+			return
+		if not brother_heard:
+			start_brother()
+			return
+		sigil_placed = true
+		player.c4_count -= 1
+		var anchor = nearby("sigil")
+		anchor.activated = true
+		anchor.queue_redraw()
+		make_noise(anchor.global_position, 240)
+		start_dialogue([["MIRO", "This shape... I know it. My hands won't stop shaking.\nOne mark. Then down. Whoever wrote that wanted me to leave."]])
+		return
+	if nearby("exit", 65):
+		if sigil_placed:
+			completed = true
+			player.velocity = Vector2.ZERO
+		else:
+			notify("'Leave a mark.' The support to the left feels familiar.")
+
+func start_brother() -> void:
+	var response := "You took his life. Was that necessary?" if player.casualty_count > 0 else "You got past him without killing. There is still time to stop."
+	start_dialogue([
+		["A VOICE BEYOND THE BARS", "Miro. Please. Don't go any lower.\n%s" % response],
+		["MIRO", "You know my name. Do I know you?"],
+		["THE VOICE", "You used to. Stay there. Let me help you."],
+		["MIRO", "That voice should mean something. It hurts that it doesn't.\nI can't stay here."]
+	], "brother")
+
+func plant_c4() -> void:
+	if controls_locked():
+		return
+	if not player.has_supplies:
+		notify("The C4 is hidden beneath your bed. [E]")
+	elif door_open:
+		notify("Keep the remaining charge. Find the marked support below.")
+	elif not nearby("door", 65):
+		notify("Move close to the cell lock to place C4.")
+	elif player.c4_count > 1:
+		player.c4_count -= 1
+		player.is_concealed = false
+		route = "C4 breach"
+		open_door()
+		shot_flash = 0.4
+		make_noise(player.global_position, 700)
+		notify("The lock bursts. Keepers heard it! Find shadow or fight your way through.", 7)
+
+func open_door() -> void:
+	door_open = true
+	$CellDoor/CollisionShape2D.set_deferred("disabled", true)
+	$Interactables/CellLock.activated = true
+	$Interactables/CellLock.queue_redraw()
+
+func make_noise(point: Vector2, radius: float) -> void:
+	for guard in guards():
+		if not guard.is_dead and guard.global_position.distance_to(point) < radius:
+			guard.investigate(point)
+
+func notify(text: String, duration: float = 4.0) -> void:
+	message = text
+	message_left = duration
+
+func label_at(parent: Node, pos: Vector2, size: Vector2, font_size: int) -> Label:
+	var label := Label.new()
+	label.position = pos
+	label.size = size
+	label.add_theme_font_size_override("font_size", font_size)
+	label.add_theme_color_override("font_color", Color("f2d3ab"))
+	label.add_theme_color_override("font_shadow_color", Color("272744"))
+	label.add_theme_constant_override("shadow_offset_x", 1)
+	label.add_theme_constant_override("shadow_offset_y", 1)
+	parent.add_child(label)
+	return label
+
+func panel_at(pos: Vector2, size: Vector2) -> PanelContainer:
+	var panel := PanelContainer.new()
+	panel.position = pos
+	panel.size = size
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color("272744")
+	style.bg_color.a = 0.97
+	style.border_color = Color("8b6d9c")
+	style.set_border_width_all(1)
+	style.content_margin_left = 16
+	style.content_margin_top = 12
+	style.content_margin_right = 16
+	style.content_margin_bottom = 12
+	panel.add_theme_stylebox_override("panel", style)
+	hud.add_child(panel)
+	return panel
+
+func build_hud() -> void:
+	hud = CanvasLayer.new()
+	hud.layer = 20
+	add_child(hud)
+	var header := ColorRect.new()
+	header.size = Vector2(640, 65)
+	header.color = Color(0.15, 0.15, 0.26, 0.92)
+	header.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	hud.add_child(header)
+	status_label = label_at(hud, Vector2(14, 10), Vector2(348, 50), 11)
+	objective_label = label_at(hud, Vector2(370, 10), Vector2(254, 48), 11)
+	objective_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	hint_label = label_at(hud, Vector2(14, 333), Vector2(612, 22), 11)
+	message_label = label_at(hud, Vector2(14, 295), Vector2(612, 34), 11)
+	message_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	dialogue_panel = panel_at(Vector2(24, 195), Vector2(592, 145))
+	dialogue_label = label_at(dialogue_panel, Vector2.ZERO, Vector2(560, 120), 12)
+	dialogue_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	overlay = panel_at(Vector2(45, 65), Vector2(550, 240))
+	overlay_label = label_at(overlay, Vector2.ZERO, Vector2(510, 200), 13)
+	overlay_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	overlay_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+
+func _draw() -> void:
+	if shot_flash > 0:
+		draw_circle(Vector2(253, 220), (0.4 - shot_flash) * 160, Color(0.95, 0.83, 0.67, shot_flash))

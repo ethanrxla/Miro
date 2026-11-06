@@ -1,0 +1,113 @@
+[gd_scene load_steps=6 format=3]
+[ext_resource type="PackedScene" path="res://scenes/player.tscn" id="1"]
+[ext_resource type="Texture2D" path="res://assets/environment/standard_tile.png" id="2"]
+[ext_resource type="Texture2D" path="res://assets/environment/cracked_tile.png" id="3"]
+[ext_resource type="Texture2D" path="res://assets/environment/connector.png" id="4"]
+[sub_resource type="RectangleShape2D" id="FloorShape"]
+size = Vector2(616, 27)
+[node name="AssetSandbox" type="Node2D"]
+texture_filter = 1
+[node name="Title" type="Label" parent="."]
+offset_left = 28.0
+offset_top = 24.0
+text = "MIRO / LEVEL WORKSHOP"
+[node name="Instructions" type="Label" parent="."]
+offset_left = 28.0
+offset_top = 55.0
+theme_override_font_sizes/font_size = 12
+text = "A/D or arrows: move   Space: jump   R: reset
+Julia's six original assets / movement sandbox"
+[node name="Floor" type="StaticBody2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
+position = Vector2(322, 310)
+shape = SubResource("FloorShape")
+[node name="Player" parent="." instance=ExtResource("1")]
+position = Vector2(100, 260)
+
+[node name="Tile00" type="Sprite2D" parent="Floor"]
+position = Vector2(28, 310)
+texture = ExtResource("2")
+
+[node name="Tile01" type="Sprite2D" parent="Floor"]
+position = Vector2(56, 310)
+texture = ExtResource("2")
+
+[node name="Tile02" type="Sprite2D" parent="Floor"]
+position = Vector2(84, 310)
+texture = ExtResource("2")
+
+[node name="Tile03" type="Sprite2D" parent="Floor"]
+position = Vector2(112, 310)
+texture = ExtResource("2")
+
+[node name="Tile04" type="Sprite2D" parent="Floor"]
+position = Vector2(140, 310)
+texture = ExtResource("3")
+
+[node name="Tile05" type="Sprite2D" parent="Floor"]
+position = Vector2(168, 310)
+texture = ExtResource("4")
+
+[node name="Tile06" type="Sprite2D" parent="Floor"]
+position = Vector2(196, 310)
+texture = ExtResource("2")
+
+[node name="Tile07" type="Sprite2D" parent="Floor"]
+position = Vector2(224, 310)
+texture = ExtResource("2")
+
+[node name="Tile08" type="Sprite2D" parent="Floor"]
+position = Vector2(252, 310)
+texture = ExtResource("2")
+
+[node name="Tile09" type="Sprite2D" parent="Floor"]
+position = Vector2(280, 310)
+texture = ExtResource("2")
+
+[node name="Tile10" type="Sprite2D" parent="Floor"]
+position = Vector2(308, 310)
+texture = ExtResource("2")
+
+[node name="Tile11" type="Sprite2D" parent="Floor"]
+position = Vector2(336, 310)
+texture = ExtResource("3")
+
+[node name="Tile12" type="Sprite2D" parent="Floor"]
+position = Vector2(364, 310)
+texture = ExtResource("4")
+
+[node name="Tile13" type="Sprite2D" parent="Floor"]
+position = Vector2(392, 310)
+texture = ExtResource("2")
+
+[node name="Tile14" type="Sprite2D" parent="Floor"]
+position = Vector2(420, 310)
+texture = ExtResource("2")
+
+[node name="Tile15" type="Sprite2D" parent="Floor"]
+position = Vector2(448, 310)
+texture = ExtResource("2")
+
+[node name="Tile16" type="Sprite2D" parent="Floor"]
+position = Vector2(476, 310)
+texture = ExtResource("2")
+
+[node name="Tile17" type="Sprite2D" parent="Floor"]
+position = Vector2(504, 310)
+texture = ExtResource("2")
+
+[node name="Tile18" type="Sprite2D" parent="Floor"]
+position = Vector2(532, 310)
+texture = ExtResource("3")
+
+[node name="Tile19" type="Sprite2D" parent="Floor"]
+position = Vector2(560, 310)
+texture = ExtResource("4")
+
+[node name="Tile20" type="Sprite2D" parent="Floor"]
+position = Vector2(588, 310)
+texture = ExtResource("2")
+
+[node name="Tile21" type="Sprite2D" parent="Floor"]
+position = Vector2(616, 310)
+texture = ExtResource("2")

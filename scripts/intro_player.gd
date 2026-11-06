@@ -121,8 +121,11 @@ func fire_gun() -> void:
 	for guard in level.guards():
 		var difference: Vector2 = guard.global_position - global_position
 		if not guard.is_dead and absf(difference.y) < 22 and difference.x * facing > 0 and difference.length() < 320 and level.clear_sight(global_position, guard.global_position):
-			guard.health = 0
-			guard.die()
+			if guard.has_method("begin_recovery"):
+				guard.take_damage(1)
+			else:
+				guard.health = 0
+				guard.die()
 			break
 
 func take_damage(amount: int) -> void:

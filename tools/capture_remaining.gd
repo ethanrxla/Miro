@@ -24,6 +24,19 @@ func capture() -> void:
 			await process_frame
 		await RenderingServer.frame_post_draw
 		root.get_texture().get_image().save_png("res://tmp/level-%02d-layout.png" % number)
+		if number == 5:
+			camera.queue_free()
+			level.player.get_node("Camera2D").enabled = true
+			level.player.get_node("Camera2D").position_smoothing_enabled = false
+			level.player.position = Vector2(650, 432)
+			level.milestones["FinalSigil"] = true
+			level.milestones["FinalOffer"] = true
+			level.hud.visible = true
+			level.interact()
+			for frame in range(10):
+				await process_frame
+			await RenderingServer.frame_post_draw
+			root.get_texture().get_image().save_png("res://tmp/brother-telegraph.png")
 		level.queue_free()
 		await process_frame
 	quit()

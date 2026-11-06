@@ -6,7 +6,10 @@ $checks = @(
     @('res://tools/test_stealth_route.gd'),
     @('res://tools/test_intro_controls.gd'),
     @('res://tools/test_scaffold.gd'),
-    @('res://tools/test_remaining_levels.gd')
+    @('res://tools/test_remaining_levels.gd'),
+    @('res://tools/test_security.gd'),
+    @('res://tools/test_brother.gd'),
+    @('res://tools/test_ending.gd')
 )
 New-Item -ItemType Directory -Force (Join-Path $PSScriptRoot 'tmp') | Out-Null
 $index = 0

@@ -27,6 +27,7 @@ var overlay_label: Label
 var shot_flash: float = 0.0
 
 func _ready() -> void:
+	get_node("/root/Campaign").enter_floor(1)
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	setup_inputs()
 	player.level = self
@@ -58,6 +59,11 @@ func controls_locked() -> bool:
 	return paused or not dialogue.is_empty() or completed
 
 func _unhandled_input(event: InputEvent) -> void:
+	if completed and event.is_action_pressed("advance") and not event.is_echo():
+		get_node("/root/Campaign").complete_floor(1, sigil_placed, {"BrotherVoice": brother_heard})
+		get_viewport().set_input_as_handled()
+		get_tree().change_scene_to_file("res://scenes/levels/level_02.tscn")
+		return
 	if event.is_action_pressed("retry") and not event.is_echo():
 		get_tree().paused = false
 		get_viewport().set_input_as_handled()
@@ -103,7 +109,7 @@ func _process(delta: float) -> void:
 		dialogue_label.text = "%s\n\n%s\n\n[E / Enter] Continue    [Tab] Skip" % [line[0], line[1]]
 	overlay.visible = paused or completed or player.is_dead
 	if completed:
-		overlay_label.text = "THE PRISONER\n\nThe first mark is set. Below, someone is coughing.\n\nEscape: %s   |   Casualties: %d\n\nEnd of the intro. Level 2 is not built yet.\n[R] Replay the floor" % [route, player.casualty_count]
+		overlay_label.text = "THE PRISONER\n\nThe first mark is set. Below, someone is coughing.\n\nEscape: %s   |   Casualties: %d\n\n[Enter] Descend to Level 2\n[R] Replay the floor" % [route, player.casualty_count]
 	elif player.is_dead:
 		overlay_label.text = "THE TOWER KEEPS ITS PRISONERS\n\n[R] Retry from the cell\nTry cover, a quiet key theft, or dodge the wind-up."
 	elif paused:

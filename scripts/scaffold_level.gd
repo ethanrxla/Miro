@@ -3,9 +3,15 @@ extends "res://scripts/intro_level.gd"
 var definition: Dictionary
 var milestones: Dictionary = {}
 var pending_milestone: String = ""
+var connected_cameras: Array[Node] = []
+var hack_remaining := 0.0
+var floor_alerts := 0
+var brother: Node
+var cinematic: Control
 
 func _ready() -> void:
 	definition = JSON.parse_string(FileAccess.get_file_as_string(get_meta("blueprint")))
+	get_node("/root/Campaign").enter_floor(int(definition.number))
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	setup_inputs()
 	player.level = self
@@ -18,15 +24,36 @@ func _ready() -> void:
 		guard.level = self
 		guard.illness_started = true
 	build_hud()
+	if int(definition.number) == 3:
+		for point in [Vector2(450, 180), Vector2(820, 370)]:
+			var camera = load("res://scenes/security_camera.tscn").instantiate()
+			camera.position = point
+			camera.level = self
+			add_child(camera)
+			connected_cameras.append(camera)
 	start_dialogue([[definition.title.to_upper(), definition.opening], ["BLOCKOUT", "Explore this floor with the existing movement and stealth controls.\n[E] tests story/objective stations. Named placeholders mark unfinished systems."]])
 
 func _process(delta: float) -> void:
 	super._process(delta)
+	if hack_remaining > 0 and not controls_locked():
+		if player.is_dead or player.global_position.distance_to(areas.get_node("RemoteTerminal").global_position) >= 48:
+			hack_remaining = 0
+			notify("Reprogramming interrupted. Stay beside the terminal for one second.")
+		else:
+			hack_remaining = maxf(0, hack_remaining - delta)
+			if hack_remaining == 0:
+				for camera in connected_cameras:
+					camera.disable()
+				pending_milestone = "RemoteTerminal"
+				start_dialogue([["CHECKPOINT", "Reprogramming complete. Linked security cameras disabled."]], "milestone")
 	if completed:
 		overlay_label.text = "%s\n\nFloor scaffold complete.\n%s\n\n[R] Retry   [Enter] %s" % [definition.title.to_upper(), definition.closing, "Next scaffold" if definition.number < 5 else "Return to Level 1"]
+		if int(definition.number) == 5:
+			overlay_label.text = "MIRO\n\nThe end.\n\n[R] Replay final floor   [Enter] New run"
 
 func _unhandled_input(event: InputEvent) -> void:
 	if completed and event.is_action_pressed("advance") and not event.is_echo():
+		get_node("/root/Campaign").complete_floor(int(definition.number), sigil_placed, milestones)
 		get_viewport().set_input_as_handled()
 		get_tree().change_scene_to_file("res://scenes/levels/level_%02d.tscn" % (int(definition.number) + 1) if definition.number < 5 else "res://scenes/intro.tscn")
 		return
@@ -50,6 +77,10 @@ func station_nearby() -> Dictionary:
 	return nearest
 
 func context_hint() -> String:
+	if is_instance_valid(brother) and not brother.is_dead:
+		return "[1] Strike during RECOVER • [C] Dodge • Space Jump"
+	if hack_remaining > 0:
+		return "Reprogramming… %d%% • stay within reach" % int((1 - hack_remaining) * 100)
 	if controls_locked() or player.is_dead:
 		return ""
 	var station := station_nearby()
@@ -76,6 +107,27 @@ func interact() -> void:
 				notify("First: " + str(required).replace("_", " "))
 				return
 		pending_milestone = station.id
+		if station.id == "ForestViewpoint":
+			pending_milestone = ""
+			cinematic = load("res://scenes/ending_cinematic.tscn").instantiate()
+			cinematic.level = self
+			cinematic.finished.connect(finish_ending)
+			hud.add_child(cinematic)
+			return
+		if station.id == "BrotherEncounter":
+			pending_milestone = ""
+			if not is_instance_valid(brother):
+				brother = load("res://scenes/brother_boss.tscn").instantiate()
+				brother.level = self
+				brother.position = player.position + Vector2(85, -10)
+				add_child(brother)
+				notify("RUSH / THROW: watch his tell. Dodge with C; strike with 1 during RECOVER.", 8)
+			return
+		if station.id == "RemoteTerminal":
+			pending_milestone = ""
+			if hack_remaining <= 0:
+				hack_remaining = 1.0
+			return
 		start_dialogue(station.lines, "milestone")
 		return
 	if nearby("exit", 65):
@@ -105,3 +157,27 @@ func can_melee_reach(from: Vector2, to: Vector2) -> bool:
 
 func plant_c4() -> void:
 	notify("This floor's charge is reserved for its sigil support. [E]")
+
+func camera_alert(point: Vector2) -> void:
+	floor_alerts += 1
+	for guard in guards():
+		if not guard.is_dead:
+			guard.investigate(point)
+	notify("CAMERA ALERT • Keepers are searching your last seen position.")
+
+func brother_defeated() -> void:
+	milestones["BrotherEncounter"] = true
+	areas.get_node("BrotherEncounter").activated = true
+	areas.get_node("BrotherEncounter").queue_redraw()
+	for station in definition.stations:
+		if station.id == "DyingExchange":
+			pending_milestone = "DyingExchange"
+			start_dialogue(station.lines, "milestone")
+
+func controls_locked() -> bool:
+	return is_instance_valid(cinematic) or super.controls_locked()
+
+func finish_ending() -> void:
+	milestones["ForestViewpoint"] = true
+	completed = true
+	get_node("/root/Campaign").complete_floor(5, sigil_placed, milestones)

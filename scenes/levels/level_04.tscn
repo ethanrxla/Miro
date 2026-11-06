@@ -21,34 +21,34 @@ size = Vector2(28, 756)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vwuh2"]
 size = Vector2(28, 756)
 
-[node name="TheWard" type="Node2D" unique_id=2010618024]
+[node name="TheWard" type="Node2D" unique_id=441923601]
 texture_filter = 1
 script = ExtResource("1_03g8n")
 metadata/blueprint = "res://data/levels/level_04.json"
 metadata/chapter = "The Ward"
 
-[node name="Architecture" type="Node2D" parent="." unique_id=957343788]
+[node name="Architecture" type="Node2D" parent="." unique_id=578428399]
 script = ExtResource("2_d1lip")
 
-[node name="StoneFloors" type="TileMapLayer" parent="." unique_id=1044358338]
+[node name="StoneFloors" type="TileMapLayer" parent="." unique_id=1854690607]
 tile_map_data = PackedByteArray("AAABAAkAAAAAAAAAAAACAAkAAAAAAAAAAAADAAkAAAAAAAAAAAAEAAkAAAAAAAAAAAAFAAkAAAAAAAAAAAAGAAkAAAAAAAAAAAAHAAkAAQAAAAAAAAAIAAkAAAAAAAAAAAAJAAkAAAAAAAAAAAAKAAkAAAAAAAAAAAALAAkAAgAAAAAAAAAMAAkAAAAAAAAAAAANAAkAAAAAAAAAAAAOAAkAAQAAAAAAAAAPAAkAAAAAAAAAAAAQAAkAAAAAAAAAAAARAAkAAAAAAAAAAAASAAkAAAAAAAAAAAATAAkAAAAAAAAAAAAUAAkAAAAAAAAAAAAVAAkAAQAAAAAAAAAWAAkAAgAAAAAAAAAXAAkAAAAAAAAAAAAYAAkAAAAAAAAAAAAZAAkAAAAAAAAAAAAaAAkAAAAAAAAAAAAbAAkAAAAAAAAAAAAcAAkAAQAAAAAAAAAfAAkAAAAAAAAAAAAgAAkAAAAAAAAAAAAhAAkAAgAAAAAAAAAiAAkAAAAAAAAAAAAjAAkAAQAAAAAAAAAkAAkAAAAAAAAAAAAlAAkAAAAAAAAAAAAmAAkAAAAAAAAAAAAMABAAAAAAAAAAAAANABAAAAAAAAAAAAAOABAAAAAAAAAAAAAPABAAAAAAAAAAAAAQABAAAQAAAAAAAAARABAAAAAAAAAAAAASABAAAAAAAAAAAAATABAAAAAAAAAAAAAUABAAAAAAAAAAAAAVABAAAAAAAAAAAAAWABAAAAAAAAAAAAAXABAAAAAAAAAAAAAYABAAAQAAAAAAAAAZABAAAAAAAAAAAAAaABAAAAAAAAAAAAAbABAAAAAAAAAAAAAcABAAAAAAAAAAAAAdABAAAAAAAAAAAAAeABAAAAAAAAAAAAAfABAAAAAAAAAAAAAgABAAAQAAAAAAAAAhABAAAAAAAAAAAAAiABAAAAAAAAAAAAAjABAAAAAAAAAAAAAkABAAAAAAAAAAAAAlABAAAAAAAAAAAAAmABAAAAAAAAAAAAABABgAAAAAAAAAAAACABgAAAAAAAAAAAADABgAAAAAAAAAAAAEABgAAAAAAAAAAAAFABgAAAAAAAAAAAAGABgAAAAAAAAAAAAHABgAAAAAAAAAAAAIABgAAAAAAAAAAAAJABgAAQAAAAAAAAAKABgAAAAAAAAAAAALABgAAAAAAAAAAAAMABgAAAAAAAAAAAANABgAAAAAAAAAAAAOABgAAAAAAAAAAAAPABgAAAAAAAAAAAAQABgAAAAAAAAAAAARABgAAAAAAAAAAAASABgAAQAAAAAAAAATABgAAAAAAAAAAAAUABgAAAAAAAAAAAAVABgAAAAAAAAAAAAWABgAAAAAAAAAAAAXABgAAAAAAAAAAAAYABgAAAAAAAAAAAAZABgAAAAAAAAAAAAaABgAAAAAAAAAAAAbABgAAQAAAAAAAAAcABgAAAAAAAAAAAAdABgAAAAAAAAAAAAeABgAAAAAAAAAAAAfABgAAAAAAAAAAAAgABgAAAAAAAAAAAAhABgAAAAAAAAAAAAiABgAAAAAAAAAAAAjABgAAAAAAAAAAAAkABgAAQAAAAAAAAAlABgAAAAAAAAAAAAmABgAAAAAAAAAAAAPAAgAAQAAAAAAAAAQAAgAAAAAAAAAAAARAAcAAAAAAAAAAAASAAcAAQAAAAAAAAATAAcAAAAAAAAAAAAUAAcAAAAAAAAAAAAfAA4AAAAAAAAAAAAgAA4AAAAAAAAAAAAhAA0AAQAAAAAAAAAiAA0AAAAAAAAAAAAPABYAAQAAAAAAAAAQABYAAAAAAAAAAAAYAA8AAQAAAAAAAAAXAA8AAAAAAAAAAAAWAA4AAAAAAAAAAAAVAA4AAQAAAAAAAAAUAA4AAAAAAAAAAAATAA4AAAAAAAAAAAAbABcAAQAAAAAAAAAaABcAAAAAAAAAAAAcABYAAAAAAAAAAAAdABYAAAAAAAAAAAAeABYAAQAAAAAAAAAfABYAAAAAAAAAAAA=")
 tile_set = ExtResource("3_o3rdr")
 
-[node name="LeftWall" type="StaticBody2D" parent="." unique_id=2144186980]
+[node name="LeftWall" type="StaticBody2D" parent="." unique_id=895449644]
 position = Vector2(14, 378)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall" unique_id=761257424]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall" unique_id=260721894]
 shape = SubResource("RectangleShape2D_8m3pt")
 
-[node name="RightWall" type="StaticBody2D" parent="." unique_id=710744679]
+[node name="RightWall" type="StaticBody2D" parent="." unique_id=1055100919]
 position = Vector2(1106, 378)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall" unique_id=666872226]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall" unique_id=1593955782]
 shape = SubResource("RectangleShape2D_vwuh2")
 
-[node name="Interactables" type="Node2D" parent="." unique_id=1725532461]
+[node name="Interactables" type="Node2D" parent="." unique_id=1623862512]
 
-[node name="FirstLadder" type="Area2D" parent="Interactables" unique_id=339271555 instance=ExtResource("4_lr2mp")]
+[node name="FirstLadder" type="Area2D" parent="Interactables" unique_id=1916676754 instance=ExtResource("4_lr2mp")]
 position = Vector2(840, 335)
 collision_layer = 0
 collision_mask = 2
@@ -56,7 +56,7 @@ script = ExtResource("5_vmerw")
 kind = "ladder"
 area_size = Vector2(40, 230)
 
-[node name="SecondLadder" type="Area2D" parent="Interactables" unique_id=428019778 instance=ExtResource("4_lr2mp")]
+[node name="SecondLadder" type="Area2D" parent="Interactables" unique_id=1878880113 instance=ExtResource("4_lr2mp")]
 position = Vector2(308, 550)
 collision_layer = 0
 collision_mask = 2
@@ -64,7 +64,7 @@ script = ExtResource("5_vmerw")
 kind = "ladder"
 area_size = Vector2(40, 252)
 
-[node name="StairGate" type="Area2D" parent="Interactables" unique_id=1697132139 instance=ExtResource("6_x1re1")]
+[node name="StairGate" type="Area2D" parent="Interactables" unique_id=2054745866 instance=ExtResource("6_x1re1")]
 position = Vector2(1043, 646)
 collision_layer = 0
 collision_mask = 2
@@ -72,56 +72,56 @@ script = ExtResource("5_vmerw")
 kind = "exit"
 area_size = Vector2(46, 60)
 
-[node name="Shadow1" type="Area2D" parent="Interactables" unique_id=1093411354 instance=ExtResource("7_sibhc")]
+[node name="Shadow1" type="Area2D" parent="Interactables" unique_id=534290892 instance=ExtResource("7_sibhc")]
 position = Vector2(200, 216)
 collision_layer = 0
 collision_mask = 2
 script = ExtResource("5_vmerw")
 area_size = Vector2(64, 72)
 
-[node name="Shadow2" type="Area2D" parent="Interactables" unique_id=1058028453 instance=ExtResource("7_sibhc")]
+[node name="Shadow2" type="Area2D" parent="Interactables" unique_id=1113602309 instance=ExtResource("7_sibhc")]
 position = Vector2(385, 216)
 collision_layer = 0
 collision_mask = 2
 script = ExtResource("5_vmerw")
 area_size = Vector2(64, 72)
 
-[node name="Shadow3" type="Area2D" parent="Interactables" unique_id=419505386 instance=ExtResource("7_sibhc")]
+[node name="Shadow3" type="Area2D" parent="Interactables" unique_id=1222794544 instance=ExtResource("7_sibhc")]
 position = Vector2(660, 216)
 collision_layer = 0
 collision_mask = 2
 script = ExtResource("5_vmerw")
 area_size = Vector2(64, 72)
 
-[node name="Shadow4" type="Area2D" parent="Interactables" unique_id=1840281109 instance=ExtResource("7_sibhc")]
+[node name="Shadow4" type="Area2D" parent="Interactables" unique_id=615068122 instance=ExtResource("7_sibhc")]
 position = Vector2(780, 412)
 collision_layer = 0
 collision_mask = 2
 script = ExtResource("5_vmerw")
 area_size = Vector2(64, 72)
 
-[node name="Shadow5" type="Area2D" parent="Interactables" unique_id=1004602256 instance=ExtResource("7_sibhc")]
+[node name="Shadow5" type="Area2D" parent="Interactables" unique_id=327502062 instance=ExtResource("7_sibhc")]
 position = Vector2(400, 412)
 collision_layer = 0
 collision_mask = 2
 script = ExtResource("5_vmerw")
 area_size = Vector2(64, 72)
 
-[node name="Shadow6" type="Area2D" parent="Interactables" unique_id=117051228 instance=ExtResource("7_sibhc")]
+[node name="Shadow6" type="Area2D" parent="Interactables" unique_id=1146818855 instance=ExtResource("7_sibhc")]
 position = Vector2(740, 636)
 collision_layer = 0
 collision_mask = 2
 script = ExtResource("5_vmerw")
 area_size = Vector2(64, 72)
 
-[node name="Shadow7" type="Area2D" parent="Interactables" unique_id=1213856363 instance=ExtResource("7_sibhc")]
+[node name="Shadow7" type="Area2D" parent="Interactables" unique_id=500384901 instance=ExtResource("7_sibhc")]
 position = Vector2(990, 636)
 collision_layer = 0
 collision_mask = 2
 script = ExtResource("5_vmerw")
 area_size = Vector2(64, 72)
 
-[node name="ExperimentRecords" type="Area2D" parent="Interactables" unique_id=1319426123 instance=ExtResource("8_vdcoq")]
+[node name="ExperimentRecords" type="Area2D" parent="Interactables" unique_id=2141091033 instance=ExtResource("8_vdcoq")]
 position = Vector2(300, 230)
 collision_layer = 0
 collision_mask = 2
@@ -129,7 +129,7 @@ script = ExtResource("5_vmerw")
 kind = "note"
 area_size = Vector2(40, 54)
 
-[node name="ContainmentEvidence" type="Area2D" parent="Interactables" unique_id=1280645531 instance=ExtResource("8_vdcoq")]
+[node name="ContainmentEvidence" type="Area2D" parent="Interactables" unique_id=627207055 instance=ExtResource("8_vdcoq")]
 position = Vector2(600, 414)
 collision_layer = 0
 collision_mask = 2
@@ -137,7 +137,7 @@ script = ExtResource("5_vmerw")
 kind = "note"
 area_size = Vector2(40, 54)
 
-[node name="BrotherWarning" type="Area2D" parent="Interactables" unique_id=1376234305 instance=ExtResource("9_fy4m5")]
+[node name="BrotherWarning" type="Area2D" parent="Interactables" unique_id=947704798 instance=ExtResource("9_fy4m5")]
 position = Vector2(410, 414)
 collision_layer = 0
 collision_mask = 2
@@ -145,7 +145,7 @@ script = ExtResource("5_vmerw")
 kind = "brother"
 area_size = Vector2(40, 54)
 
-[node name="FourthSigil" type="Area2D" parent="Interactables" unique_id=806809321 instance=ExtResource("10_axo1c")]
+[node name="FourthSigil" type="Area2D" parent="Interactables" unique_id=1302938179 instance=ExtResource("10_axo1c")]
 position = Vector2(620, 647)
 collision_layer = 0
 collision_mask = 2
@@ -153,7 +153,7 @@ script = ExtResource("5_vmerw")
 kind = "sigil"
 area_size = Vector2(40, 54)
 
-[node name="Label_ExperimentRecords" type="Label" parent="." unique_id=1511361559]
+[node name="Label_ExperimentRecords" type="Label" parent="." unique_id=2019937108]
 offset_left = 250.0
 offset_top = 165.0
 offset_right = 493.0
@@ -164,7 +164,7 @@ text = "Inspect the experiment records"
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="Label_ContainmentEvidence" type="Label" parent="." unique_id=691703198]
+[node name="Label_ContainmentEvidence" type="Label" parent="." unique_id=1259879852]
 offset_left = 550.0
 offset_top = 349.0
 offset_right = 823.0
@@ -175,7 +175,7 @@ text = "Examine the containment evidence"
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="Label_BrotherWarning" type="Label" parent="." unique_id=1887611147]
+[node name="Label_BrotherWarning" type="Label" parent="." unique_id=1484366944]
 offset_left = 360.0
 offset_top = 349.0
 offset_right = 618.0
@@ -186,7 +186,7 @@ text = "Hear the warning about the ward"
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="Label_FourthSigil" type="Label" parent="." unique_id=443618783]
+[node name="Label_FourthSigil" type="Label" parent="." unique_id=1758399705]
 offset_left = 570.0
 offset_top = 582.0
 offset_right = 774.0
@@ -197,59 +197,59 @@ text = "Place the penultimate sigil"
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="Guards" type="Node2D" parent="." unique_id=2050729386]
+[node name="Guards" type="Node2D" parent="." unique_id=989546611]
 
-[node name="GalleryKeeper" type="CharacterBody2D" parent="Guards" unique_id=2077709599 instance=ExtResource("11_mf6hd")]
+[node name="GalleryKeeper" type="CharacterBody2D" parent="Guards" unique_id=1534686515 instance=ExtResource("11_mf6hd")]
 position = Vector2(580, 236)
 collision_layer = 4
 script = ExtResource("12_5q4vb")
 patrol_left = 550.0
 patrol_right = 650.0
 
-[node name="PassageKeeper" type="CharacterBody2D" parent="Guards" unique_id=1803785710 instance=ExtResource("11_mf6hd")]
+[node name="PassageKeeper" type="CharacterBody2D" parent="Guards" unique_id=796416865 instance=ExtResource("11_mf6hd")]
 position = Vector2(600, 432)
 collision_layer = 4
 script = ExtResource("12_5q4vb")
 patrol_left = 470.0
 patrol_right = 680.0
 
-[node name="LowerKeeper" type="CharacterBody2D" parent="Guards" unique_id=759827328 instance=ExtResource("11_mf6hd")]
+[node name="LowerKeeper" type="CharacterBody2D" parent="Guards" unique_id=912293147 instance=ExtResource("11_mf6hd")]
 position = Vector2(855, 656)
 collision_layer = 4
 script = ExtResource("12_5q4vb")
 patrol_left = 810.0
 patrol_right = 950.0
 
-[node name="LevelPlan" type="Node2D" parent="." unique_id=2013794773]
+[node name="LevelPlan" type="Node2D" parent="." unique_id=2056091544]
 
-[node name="PlayerSpawn" type="Marker2D" parent="LevelPlan" unique_id=871893726]
+[node name="PlayerSpawn" type="Marker2D" parent="LevelPlan" unique_id=2021156507]
 position = Vector2(100, 236)
 
-[node name="01_ExperimentRecords" type="Marker2D" parent="LevelPlan" unique_id=66474249]
+[node name="01_ExperimentRecords" type="Marker2D" parent="LevelPlan" unique_id=159275216]
 position = Vector2(300, 230)
 metadata/purpose = "Inspect the experiment records | draft story"
 
-[node name="02_ContainmentEvidence" type="Marker2D" parent="LevelPlan" unique_id=646800883]
+[node name="02_ContainmentEvidence" type="Marker2D" parent="LevelPlan" unique_id=1520929274]
 position = Vector2(600, 425)
 metadata/purpose = "Examine the containment evidence | draft evidence; exact illness remains open"
 
-[node name="03_BrotherWarning" type="Marker2D" parent="LevelPlan" unique_id=910818]
+[node name="03_BrotherWarning" type="Marker2D" parent="LevelPlan" unique_id=9912127]
 position = Vector2(410, 422)
 metadata/purpose = "Hear the warning about the ward | draft story"
 
-[node name="04_FourthSigil" type="Marker2D" parent="LevelPlan" unique_id=1210351439]
+[node name="04_FourthSigil" type="Marker2D" parent="LevelPlan" unique_id=727375064]
 position = Vector2(620, 647)
 metadata/purpose = "Place the penultimate sigil | draft story"
 
-[node name="SealedWardDoor" type="Marker2D" parent="LevelPlan" unique_id=1545510750]
+[node name="SealedWardDoor" type="Marker2D" parent="LevelPlan" unique_id=1002503430]
 position = Vector2(560, 210)
 metadata/purpose = "Reusable quarantine door and containment art."
 
-[node name="ExperimentChamber" type="Marker2D" parent="LevelPlan" unique_id=197858863]
+[node name="ExperimentChamber" type="Marker2D" parent="LevelPlan" unique_id=1806102137]
 position = Vector2(830, 390)
 metadata/purpose = "Environmental evidence; no new enemy type required."
 
-[node name="Player" type="CharacterBody2D" parent="." unique_id=1843697817 instance=ExtResource("13_eqf4o")]
+[node name="Player" type="CharacterBody2D" parent="." unique_id=1079778772 instance=ExtResource("13_eqf4o")]
 position = Vector2(100, 236)
 collision_layer = 2
 script = ExtResource("14_47boq")

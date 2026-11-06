@@ -431,12 +431,12 @@
       "objective": "Disable the checkpoint controls",
       "lines": [
         [
-          "TERMINAL BLOCKOUT",
-          "Security-console interaction point.\nHook: one-second reprogram action disables linked cameras.\nThis station currently records the milestone only."
+          "CHECKPOINT",
+          "Reprogramming complete. Linked security cameras disabled."
         ]
       ],
       "requires": [],
-      "status": "mechanic placeholder"
+      "status": "implemented: one-second interruptible hack disables linked sweeping cameras"
     },
     {
       "id": "RankRecord",

@@ -68,52 +68,12 @@
       7
     ],
     [
-      31,
-      14
-    ],
-    [
-      32,
-      14
-    ],
-    [
-      33,
-      13
-    ],
-    [
-      34,
-      13
-    ],
-    [
       15,
       22
     ],
     [
       16,
       22
-    ],
-    [
-      24,
-      15
-    ],
-    [
-      23,
-      15
-    ],
-    [
-      22,
-      14
-    ],
-    [
-      21,
-      14
-    ],
-    [
-      20,
-      14
-    ],
-    [
-      19,
-      14
     ],
     [
       27,
@@ -473,33 +433,33 @@
     },
     {
       "id": "BrotherEncounter",
-      "title": "Test the boss encounter handoff",
+      "title": "Defeat your brother",
       "position": [
         650,
         414
       ],
       "kind": "brother",
-      "objective": "Test the boss encounter handoff",
+      "objective": "Defeat your brother",
       "lines": [
         [
-          "BOSS BLOCKOUT",
-          "Reserved arena: readable rush, thrown projectile, recovery windows.\n[E / Tab] currently simulates the defeat handoff for layout review.\nThe actual boss fight is not implemented."
+          "BROTHER",
+          "Then come, brother."
         ]
       ],
       "requires": [
         "FinalOffer"
       ],
-      "status": "boss placeholder; not combat"
+      "status": "implemented: telegraphed rush and projectile, recovery vulnerability, fatal dialogue handoff"
     },
     {
       "id": "DyingExchange",
-      "title": "Review the fatal exchange",
+      "title": "Listen to your brother",
       "position": [
         410,
         414
       ],
       "kind": "note",
-      "objective": "Review the fatal exchange",
+      "objective": "Listen to your brother",
       "lines": [
         [
           "BROTHER",
@@ -541,7 +501,7 @@
       "requires": [
         "DyingExchange"
       ],
-      "status": "cinematic storyboard placeholder"
+      "status": "implemented: prepared in-engine fallback cinematic, subtitles, pause, skip parity"
     }
   ],
   "sources": [

@@ -3,8 +3,22 @@ class_name IntroArea
 extends Area2D
 
 @export_enum("bed", "door", "cover", "ladder", "sigil", "exit", "brother", "note") var kind: String = "cover"
-@export var area_size := Vector2(60, 60)
+@export var area_size := Vector2(60, 60):
+	set(value):
+		area_size = Vector2(maxf(1, value.x), maxf(1, value.y))
+		sync_shape()
+		queue_redraw()
 var activated: bool = false
+
+func _ready() -> void:
+	sync_shape()
+
+func sync_shape() -> void:
+	var collision := get_node_or_null("CollisionShape2D") as CollisionShape2D
+	if collision:
+		var rectangle := RectangleShape2D.new()
+		rectangle.size = area_size
+		collision.shape = rectangle
 
 func contains(point: Vector2) -> bool:
 	return Rect2(global_position - area_size / 2, area_size).has_point(point)

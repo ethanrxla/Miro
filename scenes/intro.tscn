@@ -1,262 +1,261 @@
 [gd_scene format=4]
 
-[ext_resource type="Script" path="res://scripts/intro_level.gd" id="1_xwriy"]
-[ext_resource type="Script" path="res://scripts/prison_art.gd" id="2_u5myo"]
-[ext_resource type="Texture2D" path="res://assets/environment/standard_tile.png" id="3_u05oh"]
-[ext_resource type="Texture2D" path="res://assets/environment/cracked_tile.png" id="4_epycs"]
-[ext_resource type="Texture2D" path="res://assets/environment/connector.png" id="5_ge50m"]
-[ext_resource type="Script" path="res://scripts/intro_area.gd" id="6_17bgi"]
-[ext_resource type="PackedScene" path="res://scenes/cover_zone.tscn" id="7_dryi7"]
-[ext_resource type="PackedScene" path="res://scenes/ladder.tscn" id="8_5pmge"]
-[ext_resource type="PackedScene" path="res://scenes/sigil_anchor.tscn" id="9_hai50"]
-[ext_resource type="PackedScene" path="res://scenes/level_exit.tscn" id="10_kh17o"]
-[ext_resource type="PackedScene" path="res://scenes/guard.tscn" id="11_urird"]
-[ext_resource type="Script" path="res://scripts/intro_guard.gd" id="12_t5vr6"]
-[ext_resource type="PackedScene" path="res://scenes/intro_player.tscn" id="13_4vp3x"]
-[ext_resource type="Script" path="res://scripts/intro_player.gd" id="14_sg54v"]
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_goqta"]
-texture = ExtResource("3_u05oh")
-texture_region_size = Vector2i(28, 27)
-0:0/0 = 0
-0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-14, -14, 14, -14, 14, 14, -14, 14)
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_cj32t"]
-texture = ExtResource("4_epycs")
-texture_region_size = Vector2i(28, 27)
-0:0/0 = 0
-0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-14, -14, 14, -14, 14, 14, -14, 14)
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8idrm"]
-texture = ExtResource("5_ge50m")
-texture_region_size = Vector2i(28, 27)
-0:0/0 = 0
-0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-14, -14, 14, -14, 14, 14, -14, 14)
-
-[sub_resource type="TileSet" id="TileSet_yj5im"]
-tile_size = Vector2i(28, 28)
-physics_layer_0/collision_layer = 1
-physics_layer_0/collision_mask = 6
-sources/0 = SubResource("TileSetAtlasSource_goqta")
-sources/1 = SubResource("TileSetAtlasSource_cj32t")
-sources/2 = SubResource("TileSetAtlasSource_8idrm")
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_h7rjp"]
-size = Vector2(28, 756)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_6ac85"]
-size = Vector2(28, 756)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_lm4bj"]
-size = Vector2(8, 112)
+[ext_resource type="Script" path="res://scripts/intro_level.gd" id="1_u05oh"]
+[ext_resource type="Script" path="res://scripts/prison_art.gd" id="2_epycs"]
+[ext_resource type="TileSet" path="res://assets/environment/prison_tiles.tres" id="3_ge50m"]
+[ext_resource type="PackedScene" path="res://scenes/prison_bed.tscn" id="4_17bgi"]
+[ext_resource type="Script" path="res://scripts/intro_area.gd" id="5_dryi7"]
+[ext_resource type="PackedScene" path="res://scenes/cell_lock.tscn" id="6_5pmge"]
+[ext_resource type="PackedScene" path="res://scenes/cover_zone.tscn" id="7_hai50"]
+[ext_resource type="PackedScene" path="res://scenes/ladder.tscn" id="8_kh17o"]
+[ext_resource type="PackedScene" path="res://scenes/sigil_anchor.tscn" id="9_urird"]
+[ext_resource type="PackedScene" path="res://scenes/level_exit.tscn" id="10_t5vr6"]
+[ext_resource type="PackedScene" path="res://scenes/voice_gate.tscn" id="11_4vp3x"]
+[ext_resource type="PackedScene" path="res://scenes/story_note.tscn" id="12_sg54v"]
+[ext_resource type="PackedScene" path="res://scenes/guard.tscn" id="13_yj5im"]
+[ext_resource type="Script" path="res://scripts/intro_guard.gd" id="14_h7rjp"]
+[ext_resource type="PackedScene" path="res://scenes/intro_player.tscn" id="15_6ac85"]
+[ext_resource type="Script" path="res://scripts/intro_player.gd" id="16_lm4bj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x2gsc"]
-size = Vector2(54, 30)
+size = Vector2(28, 756)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_366e5"]
-size = Vector2(16, 64)
+size = Vector2(28, 756)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_38pnl"]
-size = Vector2(44, 55)
+size = Vector2(8, 112)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_y6kq6"]
-size = Vector2(22, 30)
-
-[node name="ThePrisoner" type="Node2D" unique_id=1543566886]
+[node name="ThePrisoner" type="Node2D" unique_id=179313180]
 texture_filter = 1
-script = ExtResource("1_xwriy")
+script = ExtResource("1_u05oh")
+metadata/blueprint = "res://data/levels/level_01.json"
+metadata/chapter = "The Prisoner"
 
-[node name="Architecture" type="Node2D" parent="." unique_id=1459736641]
-script = ExtResource("2_u5myo")
+[node name="Architecture" type="Node2D" parent="." unique_id=1749692877]
+script = ExtResource("2_epycs")
 
-[node name="StoneFloors" type="TileMapLayer" parent="." unique_id=1352236850]
-tile_map_data = PackedByteArray("AAABAAkAAAAAAAAAAAABABgAAAAAAAAAAAACAAkAAAAAAAAAAAACABgAAAAAAAAAAAADAAkAAAAAAAAAAAADABgAAAAAAAAAAAAEAAkAAAAAAAAAAAAEABgAAAAAAAAAAAAFAAkAAAAAAAAAAAAFABgAAAAAAAAAAAAGAAkAAAAAAAAAAAAGABgAAAAAAAAAAAAHAAkAAQAAAAAAAAAHABgAAAAAAAAAAAAIAAkAAAAAAAAAAAAIABgAAAAAAAAAAAAJAAkAAAAAAAAAAAAJABgAAQAAAAAAAAAKAAkAAAAAAAAAAAAKABgAAAAAAAAAAAALAAkAAgAAAAAAAAALABgAAAAAAAAAAAAMAAkAAAAAAAAAAAAMABAAAAAAAAAAAAAMABgAAAAAAAAAAAANAAkAAAAAAAAAAAANABAAAAAAAAAAAAANABgAAAAAAAAAAAAOAAkAAQAAAAAAAAAOABAAAAAAAAAAAAAOABgAAAAAAAAAAAAPAAkAAAAAAAAAAAAPABAAAAAAAAAAAAAPABgAAAAAAAAAAAAQAAkAAAAAAAAAAAAQABAAAQAAAAAAAAAQABgAAAAAAAAAAAARAAkAAAAAAAAAAAARABAAAAAAAAAAAAARABgAAAAAAAAAAAASAAkAAAAAAAAAAAASABAAAAAAAAAAAAASABgAAQAAAAAAAAATAAkAAAAAAAAAAAATABAAAAAAAAAAAAATABgAAAAAAAAAAAAUAAkAAAAAAAAAAAAUABAAAAAAAAAAAAAUABgAAAAAAAAAAAAVAAkAAQAAAAAAAAAVABAAAAAAAAAAAAAVABgAAAAAAAAAAAAWAAkAAgAAAAAAAAAWABAAAAAAAAAAAAAWABgAAAAAAAAAAAAXAAkAAAAAAAAAAAAXABAAAAAAAAAAAAAXABgAAAAAAAAAAAAYAAkAAAAAAAAAAAAYABAAAQAAAAAAAAAYABgAAAAAAAAAAAAZABAAAAAAAAAAAAAZABgAAAAAAAAAAAAaABAAAAAAAAAAAAAaABgAAAAAAAAAAAAbAAkAAAAAAAAAAAAbABAAAAAAAAAAAAAbABgAAQAAAAAAAAAcAAkAAQAAAAAAAAAcABAAAAAAAAAAAAAcABgAAAAAAAAAAAAdAAkAAAAAAAAAAAAdABAAAAAAAAAAAAAdABgAAAAAAAAAAAAeAAkAAAAAAAAAAAAeABAAAAAAAAAAAAAeABgAAAAAAAAAAAAfAAkAAAAAAAAAAAAfABAAAAAAAAAAAAAfABgAAAAAAAAAAAAgAAkAAAAAAAAAAAAgABAAAQAAAAAAAAAgABgAAAAAAAAAAAAhAAkAAgAAAAAAAAAhABAAAAAAAAAAAAAhABgAAAAAAAAAAAAiAAkAAAAAAAAAAAAiABAAAAAAAAAAAAAiABgAAAAAAAAAAAAjAAkAAQAAAAAAAAAjABAAAAAAAAAAAAAjABgAAAAAAAAAAAAkAAkAAAAAAAAAAAAkABAAAAAAAAAAAAAkABgAAQAAAAAAAAAlAAkAAAAAAAAAAAAlABAAAAAAAAAAAAAlABgAAAAAAAAAAAAmAAkAAAAAAAAAAAAmABAAAAAAAAAAAAAmABgAAAAAAAAAAAAPAAgAAQAAAAAAAAAQAAgAAAAAAAAAAAARAAcAAAAAAAAAAAASAAcAAQAAAAAAAAATAAcAAAAAAAAAAAAUAAcAAAAAAAAAAAAfAA4AAAAAAAAAAAAgAA4AAAAAAAAAAAAhAA0AAQAAAAAAAAAiAA0AAAAAAAAAAAAPABYAAQAAAAAAAAAQABYAAAAAAAAAAAAYAA8AAQAAAAAAAAAXAA8AAAAAAAAAAAAWAA4AAAAAAAAAAAAVAA4AAQAAAAAAAAAUAA4AAAAAAAAAAAATAA4AAAAAAAAAAAAbABcAAQAAAAAAAAAaABcAAAAAAAAAAAAcABYAAAAAAAAAAAAdABYAAAAAAAAAAAAeABYAAQAAAAAAAAAfABYAAAAAAAAAAAA=")
-tile_set = SubResource("TileSet_yj5im")
+[node name="StoneFloors" type="TileMapLayer" parent="." unique_id=1316982988]
+tile_map_data = PackedByteArray("AAABAAkAAAAAAAAAAAACAAkAAAAAAAAAAAADAAkAAAAAAAAAAAAEAAkAAAAAAAAAAAAFAAkAAAAAAAAAAAAGAAkAAAAAAAAAAAAHAAkAAQAAAAAAAAAIAAkAAAAAAAAAAAAJAAkAAAAAAAAAAAAKAAkAAAAAAAAAAAALAAkAAgAAAAAAAAAMAAkAAAAAAAAAAAANAAkAAAAAAAAAAAAOAAkAAQAAAAAAAAAPAAkAAAAAAAAAAAAQAAkAAAAAAAAAAAARAAkAAAAAAAAAAAASAAkAAAAAAAAAAAATAAkAAAAAAAAAAAAUAAkAAAAAAAAAAAAVAAkAAQAAAAAAAAAWAAkAAgAAAAAAAAAXAAkAAAAAAAAAAAAYAAkAAAAAAAAAAAAbAAkAAAAAAAAAAAAcAAkAAQAAAAAAAAAdAAkAAAAAAAAAAAAeAAkAAAAAAAAAAAAfAAkAAAAAAAAAAAAgAAkAAAAAAAAAAAAhAAkAAgAAAAAAAAAiAAkAAAAAAAAAAAAjAAkAAQAAAAAAAAAkAAkAAAAAAAAAAAAlAAkAAAAAAAAAAAAmAAkAAAAAAAAAAAAMABAAAAAAAAAAAAANABAAAAAAAAAAAAAOABAAAAAAAAAAAAAPABAAAAAAAAAAAAAQABAAAQAAAAAAAAARABAAAAAAAAAAAAASABAAAAAAAAAAAAATABAAAAAAAAAAAAAUABAAAAAAAAAAAAAVABAAAAAAAAAAAAAWABAAAAAAAAAAAAAXABAAAAAAAAAAAAAYABAAAQAAAAAAAAAZABAAAAAAAAAAAAAaABAAAAAAAAAAAAAbABAAAAAAAAAAAAAcABAAAAAAAAAAAAAdABAAAAAAAAAAAAAeABAAAAAAAAAAAAAfABAAAAAAAAAAAAAgABAAAQAAAAAAAAAhABAAAAAAAAAAAAAiABAAAAAAAAAAAAAjABAAAAAAAAAAAAAkABAAAAAAAAAAAAAlABAAAAAAAAAAAAAmABAAAAAAAAAAAAABABgAAAAAAAAAAAACABgAAAAAAAAAAAADABgAAAAAAAAAAAAEABgAAAAAAAAAAAAFABgAAAAAAAAAAAAGABgAAAAAAAAAAAAHABgAAAAAAAAAAAAIABgAAAAAAAAAAAAJABgAAQAAAAAAAAAKABgAAAAAAAAAAAALABgAAAAAAAAAAAAMABgAAAAAAAAAAAANABgAAAAAAAAAAAAOABgAAAAAAAAAAAAPABgAAAAAAAAAAAAQABgAAAAAAAAAAAARABgAAAAAAAAAAAASABgAAQAAAAAAAAATABgAAAAAAAAAAAAUABgAAAAAAAAAAAAVABgAAAAAAAAAAAAWABgAAAAAAAAAAAAXABgAAAAAAAAAAAAYABgAAAAAAAAAAAAZABgAAAAAAAAAAAAaABgAAAAAAAAAAAAbABgAAQAAAAAAAAAcABgAAAAAAAAAAAAdABgAAAAAAAAAAAAeABgAAAAAAAAAAAAfABgAAAAAAAAAAAAgABgAAAAAAAAAAAAhABgAAAAAAAAAAAAiABgAAAAAAAAAAAAjABgAAAAAAAAAAAAkABgAAQAAAAAAAAAlABgAAAAAAAAAAAAmABgAAAAAAAAAAAAPAAgAAQAAAAAAAAAQAAgAAAAAAAAAAAARAAcAAAAAAAAAAAASAAcAAQAAAAAAAAATAAcAAAAAAAAAAAAUAAcAAAAAAAAAAAAfAA4AAAAAAAAAAAAgAA4AAAAAAAAAAAAhAA0AAQAAAAAAAAAiAA0AAAAAAAAAAAAPABYAAQAAAAAAAAAQABYAAAAAAAAAAAAYAA8AAQAAAAAAAAAXAA8AAAAAAAAAAAAWAA4AAAAAAAAAAAAVAA4AAQAAAAAAAAAUAA4AAAAAAAAAAAATAA4AAAAAAAAAAAAbABcAAQAAAAAAAAAaABcAAAAAAAAAAAAcABYAAAAAAAAAAAAdABYAAAAAAAAAAAAeABYAAQAAAAAAAAAfABYAAAAAAAAAAAA=")
+tile_set = ExtResource("3_ge50m")
 
-[node name="LeftWall" type="StaticBody2D" parent="." unique_id=1353121275]
+[node name="LeftWall" type="StaticBody2D" parent="." unique_id=1575047328]
 position = Vector2(14, 378)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall" unique_id=681073651]
-shape = SubResource("RectangleShape2D_h7rjp")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall" unique_id=1036865948]
+shape = SubResource("RectangleShape2D_x2gsc")
 
-[node name="RightWall" type="StaticBody2D" parent="." unique_id=661152267]
+[node name="RightWall" type="StaticBody2D" parent="." unique_id=1381186596]
 position = Vector2(1106, 378)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall" unique_id=1627256360]
-shape = SubResource("RectangleShape2D_6ac85")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall" unique_id=1014653290]
+shape = SubResource("RectangleShape2D_366e5")
 
-[node name="CellDoor" type="StaticBody2D" parent="." unique_id=599289678]
+[node name="CellDoor" type="StaticBody2D" parent="." unique_id=1581546225]
 position = Vector2(253, 196)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CellDoor" unique_id=212877847]
-shape = SubResource("RectangleShape2D_lm4bj")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CellDoor" unique_id=1653610984]
+shape = SubResource("RectangleShape2D_38pnl")
 
-[node name="Interactables" type="Node2D" parent="." unique_id=102917503]
+[node name="Interactables" type="Node2D" parent="." unique_id=872906747]
 
-[node name="Bed" type="Area2D" parent="Interactables" unique_id=797371687]
+[node name="Bed" type="Area2D" parent="Interactables" unique_id=1417027476 instance=ExtResource("4_17bgi")]
 position = Vector2(112, 239)
 collision_layer = 0
 collision_mask = 2
-script = ExtResource("6_17bgi")
+script = ExtResource("5_dryi7")
 kind = "bed"
 area_size = Vector2(54, 30)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Bed" unique_id=88417168]
-shape = SubResource("RectangleShape2D_x2gsc")
-
-[node name="CellLock" type="Area2D" parent="Interactables" unique_id=73705438]
+[node name="CellLock" type="Area2D" parent="Interactables" unique_id=1406265692 instance=ExtResource("6_5pmge")]
 position = Vector2(253, 220)
 collision_layer = 0
 collision_mask = 2
-script = ExtResource("6_17bgi")
+script = ExtResource("5_dryi7")
 kind = "door"
 area_size = Vector2(16, 64)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/CellLock" unique_id=446891410]
-shape = SubResource("RectangleShape2D_366e5")
-
-[node name="CellShadow" type="Area2D" parent="Interactables" unique_id=1383928609 instance=ExtResource("7_dryi7")]
+[node name="CellShadow" type="Area2D" parent="Interactables" unique_id=445331828 instance=ExtResource("7_hai50")]
 position = Vector2(180, 216)
 collision_layer = 0
 collision_mask = 2
-script = ExtResource("6_17bgi")
+script = ExtResource("5_dryi7")
 area_size = Vector2(65, 72)
 
-[node name="FirstRefuge" type="Area2D" parent="Interactables" unique_id=374764562 instance=ExtResource("7_dryi7")]
+[node name="FirstRefuge" type="Area2D" parent="Interactables" unique_id=917651256 instance=ExtResource("7_hai50")]
 position = Vector2(322, 216)
 collision_layer = 0
 collision_mask = 2
-script = ExtResource("6_17bgi")
+script = ExtResource("5_dryi7")
 area_size = Vector2(52, 72)
 
-[node name="GalleryShadow" type="Area2D" parent="Interactables" unique_id=1334239585 instance=ExtResource("7_dryi7")]
+[node name="GalleryShadow" type="Area2D" parent="Interactables" unique_id=185761219 instance=ExtResource("7_hai50")]
 position = Vector2(385, 216)
 collision_layer = 0
 collision_mask = 2
-script = ExtResource("6_17bgi")
+script = ExtResource("5_dryi7")
 area_size = Vector2(60, 72)
 
-[node name="StairShadow" type="Area2D" parent="Interactables" unique_id=1520345944 instance=ExtResource("7_dryi7")]
+[node name="StairShadow" type="Area2D" parent="Interactables" unique_id=1462832576 instance=ExtResource("7_hai50")]
 position = Vector2(660, 216)
 collision_layer = 0
 collision_mask = 2
-script = ExtResource("6_17bgi")
+script = ExtResource("5_dryi7")
 area_size = Vector2(62, 72)
 
-[node name="FirstLadder" type="Area2D" parent="Interactables" unique_id=2014129660 instance=ExtResource("8_5pmge")]
+[node name="FirstLadder" type="Area2D" parent="Interactables" unique_id=322264732 instance=ExtResource("8_kh17o")]
 position = Vector2(728, 335)
 collision_layer = 0
 collision_mask = 2
-script = ExtResource("6_17bgi")
+script = ExtResource("5_dryi7")
 kind = "ladder"
 area_size = Vector2(40, 230)
 
-[node name="LandingShadow" type="Area2D" parent="Interactables" unique_id=2096499568 instance=ExtResource("7_dryi7")]
+[node name="LandingShadow" type="Area2D" parent="Interactables" unique_id=238268667 instance=ExtResource("7_hai50")]
 position = Vector2(780, 412)
 collision_layer = 0
 collision_mask = 2
-script = ExtResource("6_17bgi")
+script = ExtResource("5_dryi7")
 area_size = Vector2(65, 72)
 
-[node name="PassageShadow" type="Area2D" parent="Interactables" unique_id=1367942624 instance=ExtResource("7_dryi7")]
+[node name="PassageShadow" type="Area2D" parent="Interactables" unique_id=1065254024 instance=ExtResource("7_hai50")]
 position = Vector2(400, 412)
 collision_layer = 0
 collision_mask = 2
-script = ExtResource("6_17bgi")
+script = ExtResource("5_dryi7")
 area_size = Vector2(64, 72)
 
-[node name="SecondLadder" type="Area2D" parent="Interactables" unique_id=1202313566 instance=ExtResource("8_5pmge")]
+[node name="SecondLadder" type="Area2D" parent="Interactables" unique_id=1161401513 instance=ExtResource("8_kh17o")]
 position = Vector2(308, 550)
 collision_layer = 0
 collision_mask = 2
-script = ExtResource("6_17bgi")
+script = ExtResource("5_dryi7")
 kind = "ladder"
 area_size = Vector2(40, 252)
 
-[node name="LowerShadow" type="Area2D" parent="Interactables" unique_id=728502401 instance=ExtResource("7_dryi7")]
+[node name="LowerShadow" type="Area2D" parent="Interactables" unique_id=164920060 instance=ExtResource("7_hai50")]
 position = Vector2(740, 636)
 collision_layer = 0
 collision_mask = 2
-script = ExtResource("6_17bgi")
+script = ExtResource("5_dryi7")
 area_size = Vector2(70, 72)
 
-[node name="ExitShadow" type="Area2D" parent="Interactables" unique_id=409776577 instance=ExtResource("7_dryi7")]
+[node name="ExitShadow" type="Area2D" parent="Interactables" unique_id=120356012 instance=ExtResource("7_hai50")]
 position = Vector2(990, 636)
 collision_layer = 0
 collision_mask = 2
-script = ExtResource("6_17bgi")
+script = ExtResource("5_dryi7")
 area_size = Vector2(62, 72)
 
-[node name="SigilAnchor" type="Area2D" parent="Interactables" unique_id=1048147631 instance=ExtResource("9_hai50")]
+[node name="SigilAnchor" type="Area2D" parent="Interactables" unique_id=651746330 instance=ExtResource("9_urird")]
 position = Vector2(620, 647)
 collision_layer = 0
 collision_mask = 2
-script = ExtResource("6_17bgi")
+script = ExtResource("5_dryi7")
 kind = "sigil"
 area_size = Vector2(30, 50)
 
-[node name="StairGate" type="Area2D" parent="Interactables" unique_id=334871571 instance=ExtResource("10_kh17o")]
+[node name="StairGate" type="Area2D" parent="Interactables" unique_id=420937823 instance=ExtResource("10_t5vr6")]
 position = Vector2(1043, 646)
 collision_layer = 0
 collision_mask = 2
-script = ExtResource("6_17bgi")
+script = ExtResource("5_dryi7")
 kind = "exit"
 area_size = Vector2(46, 60)
 
-[node name="VoiceGate" type="Area2D" parent="Interactables" unique_id=235362724]
+[node name="VoiceGate" type="Area2D" parent="Interactables" unique_id=2006388112 instance=ExtResource("11_4vp3x")]
 position = Vector2(680, 226)
 collision_layer = 0
 collision_mask = 2
-script = ExtResource("6_17bgi")
+script = ExtResource("5_dryi7")
 kind = "brother"
 area_size = Vector2(44, 55)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/VoiceGate" unique_id=226319291]
-shape = SubResource("RectangleShape2D_38pnl")
-
-[node name="QuarantineOrder" type="Area2D" parent="Interactables" unique_id=834464209]
+[node name="QuarantineOrder" type="Area2D" parent="Interactables" unique_id=311546092 instance=ExtResource("12_sg54v")]
 position = Vector2(870, 425)
 collision_layer = 0
 collision_mask = 2
-script = ExtResource("6_17bgi")
+script = ExtResource("5_dryi7")
 kind = "note"
 area_size = Vector2(22, 30)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/QuarantineOrder" unique_id=1154416255]
-shape = SubResource("RectangleShape2D_y6kq6")
+[node name="Guards" type="Node2D" parent="." unique_id=1473679419]
 
-[node name="Guards" type="Node2D" parent="." unique_id=75964164]
-
-[node name="CorruptKeeper" type="CharacterBody2D" parent="Guards" unique_id=2121812699 instance=ExtResource("11_urird")]
+[node name="CorruptKeeper" type="CharacterBody2D" parent="Guards" unique_id=855527499 instance=ExtResource("13_yj5im")]
 position = Vector2(280, 236)
 collision_layer = 4
-script = ExtResource("12_t5vr6")
+script = ExtResource("14_h7rjp")
 patrol_left = 280.0
 patrol_right = 365.0
 sick_guard = true
 
-[node name="GalleryKeeper" type="CharacterBody2D" parent="Guards" unique_id=119544865 instance=ExtResource("11_urird")]
+[node name="GalleryKeeper" type="CharacterBody2D" parent="Guards" unique_id=440106987 instance=ExtResource("13_yj5im")]
 position = Vector2(580, 236)
 collision_layer = 4
-script = ExtResource("12_t5vr6")
+script = ExtResource("14_h7rjp")
 patrol_left = 550.0
 patrol_right = 650.0
 
-[node name="PassageKeeper" type="CharacterBody2D" parent="Guards" unique_id=1744268618 instance=ExtResource("11_urird")]
+[node name="PassageKeeper" type="CharacterBody2D" parent="Guards" unique_id=1849571380 instance=ExtResource("13_yj5im")]
 position = Vector2(600, 432)
 collision_layer = 4
-script = ExtResource("12_t5vr6")
+script = ExtResource("14_h7rjp")
 patrol_left = 470.0
 patrol_right = 680.0
 
-[node name="LowerKeeper" type="CharacterBody2D" parent="Guards" unique_id=258569936 instance=ExtResource("11_urird")]
+[node name="LowerKeeper" type="CharacterBody2D" parent="Guards" unique_id=1663288349 instance=ExtResource("13_yj5im")]
 position = Vector2(855, 656)
 collision_layer = 4
-script = ExtResource("12_t5vr6")
+script = ExtResource("14_h7rjp")
 patrol_left = 810.0
 patrol_right = 950.0
 
-[node name="Player" type="CharacterBody2D" parent="." unique_id=975158124 instance=ExtResource("13_4vp3x")]
+[node name="LevelPlan" type="Node2D" parent="." unique_id=875164224]
+
+[node name="PlayerSpawn" type="Marker2D" parent="LevelPlan" unique_id=2011173836]
+position = Vector2(140, 236)
+
+[node name="01_WakeInCell" type="Marker2D" parent="LevelPlan" unique_id=1003439438]
+position = Vector2(140, 236)
+metadata/purpose = "Amnesia, Keeper corruption and sickness; E dialogue and bed supplies."
+
+[node name="02_EscapeChoice" type="Marker2D" parent="LevelPlan" unique_id=638134186]
+position = Vector2(240, 236)
+metadata/purpose = "Key theft, reach-through shank or C4 lock breach."
+
+[node name="03_FirstCover" type="Marker2D" parent="LevelPlan" unique_id=1073200339]
+position = Vector2(310, 236)
+metadata/purpose = "Blanket concealment; wait for patrol to look away."
+
+[node name="04_HighRoute" type="Marker2D" parent="LevelPlan" unique_id=210715868]
+position = Vector2(510, 181)
+metadata/purpose = "Jumping, sight lines and optional combat."
+
+[node name="05_FamiliarVoice" type="Marker2D" parent="LevelPlan" unique_id=2034890454]
+position = Vector2(660, 236)
+metadata/purpose = "Brother speaks beyond gate; identity remains mysterious."
+
+[node name="06_FirstDescent" type="Marker2D" parent="LevelPlan" unique_id=1145380533]
+position = Vector2(728, 335)
+metadata/purpose = "W/S ladder descent; guards stay on their tier."
+
+[node name="07_PatrolPassage" type="Marker2D" parent="LevelPlan" unique_id=331821595]
+position = Vector2(590, 377)
+metadata/purpose = "Simple patrol bypass; quarantine order is optional."
+
+[node name="08_LowerDescent" type="Marker2D" parent="LevelPlan" unique_id=1028444552]
+position = Vector2(308, 550)
+metadata/purpose = "Second ladder into lower vault."
+
+[node name="09_FirstSigil" type="Marker2D" parent="LevelPlan" unique_id=1950904462]
+position = Vector2(620, 647)
+metadata/purpose = "Required idempotent mark on structural support."
+
+[node name="10_Exit" type="Marker2D" parent="LevelPlan" unique_id=2002462085]
+position = Vector2(1043, 646)
+metadata/purpose = "Finish Level 1; reserve Level 2 mechanics for later."
+
+[node name="Player" type="CharacterBody2D" parent="." unique_id=127039344 instance=ExtResource("15_6ac85")]
 position = Vector2(140, 236)
 collision_layer = 2
-script = ExtResource("14_sg54v")
+script = ExtResource("16_lm4bj")

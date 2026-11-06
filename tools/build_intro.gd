@@ -3,6 +3,11 @@ extends SceneTree
 var level: Node2D
 var areas: Node2D
 var guards_node: Node2D
+var blueprint_path := "res://data/levels/level_01.json"
+var output_path := "res://scenes/intro.tscn"
+var controller_path := "res://scripts/intro_level.gd"
+var art_path := "res://scripts/prison_art.gd"
+var build_and_quit := true
 
 func _initialize() -> void:
 	call_deferred("build")
@@ -24,7 +29,7 @@ func solid(node_name: String, position: Vector2, size: Vector2) -> void:
 	attach(shape, body, "CollisionShape2D")
 
 func area(node_name: String, kind: String, position: Vector2, size: Vector2) -> void:
-	var templates := {"cover": "cover_zone", "ladder": "ladder", "sigil": "sigil_anchor", "exit": "level_exit"}
+	var templates := {"cover": "cover_zone", "ladder": "ladder", "sigil": "sigil_anchor", "exit": "level_exit", "bed": "prison_bed", "door": "cell_lock", "brother": "voice_gate", "note": "story_note"}
 	var node: Area2D
 	if templates.has(kind):
 		node = load("res://scenes/%s.tscn" % templates[kind]).instantiate()
@@ -55,15 +60,23 @@ func guard(node_name: String, position: Vector2, left: float, right: float, sick
 	attach(node, guards_node, node_name)
 
 func build() -> void:
+	var parsed = JSON.parse_string(FileAccess.get_file_as_string(blueprint_path))
+	if not parsed is Dictionary:
+		push_error("Invalid Level 1 blueprint: " + blueprint_path)
+		quit(1)
+		return
+	var blueprint: Dictionary = parsed
 	level = Node2D.new()
-	level.name = "ThePrisoner"
+	level.name = str(blueprint.title).replace(" ", "")
+	level.set_meta("blueprint", blueprint_path)
+	level.set_meta("chapter", blueprint.title)
 	level.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-	level.set_script(load("res://scripts/intro_level.gd"))
+	level.set_script(load(controller_path))
 	var art := Node2D.new()
-	art.set_script(load("res://scripts/prison_art.gd"))
+	art.set_script(load(art_path))
 	attach(art, level, "Architecture")
 	var tileset := TileSet.new()
-	tileset.tile_size = Vector2i(28, 28)
+	tileset.tile_size = Vector2i(int(blueprint.tile_size[0]), int(blueprint.tile_size[1]))
 	tileset.add_physics_layer()
 	tileset.set_physics_layer_collision_layer(0, 1)
 	tileset.set_physics_layer_collision_mask(0, 6)
@@ -78,47 +91,57 @@ func build() -> void:
 		data.set_collision_polygons_count(0, 1)
 		data.set_collision_polygon_points(0, 0, PackedVector2Array([Vector2(-14, -14), Vector2(14, -14), Vector2(14, 14), Vector2(-14, 14)]))
 	ResourceSaver.save(tileset, "res://assets/environment/prison_tiles.tres")
+	tileset.take_over_path("res://assets/environment/prison_tiles.tres")
 	var floor := TileMapLayer.new()
 	floor.tile_set = tileset
 	attach(floor, level, "StoneFloors")
-	for x in range(1, 39):
-		if x != 25 and x != 26:
-			floor.set_cell(Vector2i(x, 9), 1 if x % 7 == 0 else (2 if x % 11 == 0 else 0), Vector2i.ZERO)
-		if x >= 12:
-			floor.set_cell(Vector2i(x, 16), 1 if x % 8 == 0 else 0, Vector2i.ZERO)
-		floor.set_cell(Vector2i(x, 24), 1 if x % 9 == 0 else 0, Vector2i.ZERO)
-	# Optional high shelves and broken stair variations above the patrol paths.
-	for cell in [Vector2i(15, 8), Vector2i(16, 8), Vector2i(17, 7), Vector2i(18, 7), Vector2i(19, 7), Vector2i(20, 7), Vector2i(31, 14), Vector2i(32, 14), Vector2i(33, 13), Vector2i(34, 13), Vector2i(15, 22), Vector2i(16, 22), Vector2i(24, 15), Vector2i(23, 15), Vector2i(22, 14), Vector2i(21, 14), Vector2i(20, 14), Vector2i(19, 14), Vector2i(27, 23), Vector2i(26, 23), Vector2i(28, 22), Vector2i(29, 22), Vector2i(30, 22), Vector2i(31, 22)]:
-		floor.set_cell(cell, 1 if cell.x % 3 == 0 else 0, Vector2i.ZERO)
-	solid("LeftWall", Vector2(14, 378), Vector2(28, 756))
-	solid("RightWall", Vector2(1106, 378), Vector2(28, 756))
-	solid("CellDoor", Vector2(253, 196), Vector2(8, 112))
+	for band in blueprint.floor_rows:
+		for x in range(int(band.first_column), int(band.last_column) + 1):
+			if float(x) in band.gaps:
+				continue
+			var source := 0
+			if int(band.crack_every) > 0 and x % int(band.crack_every) == 0:
+				source = 1
+			elif int(band.connector_every) > 0 and x % int(band.connector_every) == 0:
+				source = 2
+			floor.set_cell(Vector2i(x, int(band.row)), source, Vector2i.ZERO)
+	for cell in blueprint.shelves:
+		floor.set_cell(Vector2i(int(cell[0]), int(cell[1])), 1 if int(cell[0]) % 3 == 0 else 0, Vector2i.ZERO)
+	for wall in blueprint.solids:
+		solid(wall.name, point(wall.position), point(wall.size))
 	areas = Node2D.new()
 	attach(areas, level, "Interactables")
-	area("Bed", "bed", Vector2(112, 239), Vector2(54, 30))
-	area("CellLock", "door", Vector2(253, 220), Vector2(16, 64))
-	area("CellShadow", "cover", Vector2(180, 216), Vector2(65, 72))
-	area("FirstRefuge", "cover", Vector2(322, 216), Vector2(52, 72))
-	area("GalleryShadow", "cover", Vector2(385, 216), Vector2(60, 72))
-	area("StairShadow", "cover", Vector2(660, 216), Vector2(62, 72))
-	area("FirstLadder", "ladder", Vector2(728, 335), Vector2(40, 230))
-	area("LandingShadow", "cover", Vector2(780, 412), Vector2(65, 72))
-	area("PassageShadow", "cover", Vector2(400, 412), Vector2(64, 72))
-	area("SecondLadder", "ladder", Vector2(308, 550), Vector2(40, 252))
-	area("LowerShadow", "cover", Vector2(740, 636), Vector2(70, 72))
-	area("ExitShadow", "cover", Vector2(990, 636), Vector2(62, 72))
-	area("SigilAnchor", "sigil", Vector2(620, 647), Vector2(30, 50))
-	area("StairGate", "exit", Vector2(1043, 646), Vector2(46, 60))
-	area("VoiceGate", "brother", Vector2(680, 226), Vector2(44, 55))
-	area("QuarantineOrder", "note", Vector2(870, 425), Vector2(22, 30))
+	for item in blueprint.interactables:
+		area(item.name, item.kind, point(item.position), point(item.size))
+	if blueprint.has("stations"):
+		for station in blueprint.stations:
+			var label := Label.new()
+			label.text = station.title
+			label.position = point(station.position) + Vector2(-50, -65)
+			label.size = Vector2(100, 32)
+			label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+			label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+			label.add_theme_font_size_override("font_size", 9)
+			label.add_theme_color_override("font_color", Color("c69fa5"))
+			attach(label, level, "Label_" + station.id)
 	guards_node = Node2D.new()
 	attach(guards_node, level, "Guards")
-	guard("CorruptKeeper", Vector2(280, 236), 280, 365, true)
-	guard("GalleryKeeper", Vector2(580, 236), 550, 650)
-	guard("PassageKeeper", Vector2(600, 432), 470, 680)
-	guard("LowerKeeper", Vector2(855, 656), 810, 950)
+	for keeper in blueprint.guards:
+		guard(keeper.name, point(keeper.position), keeper.patrol_left, keeper.patrol_right, keeper.sick)
+	var markers := Node2D.new()
+	attach(markers, level, "LevelPlan")
+	var spawn := Marker2D.new()
+	spawn.position = point(blueprint.spawn)
+	attach(spawn, markers, "PlayerSpawn")
+	for beat in blueprint.beats:
+		var marker := Marker2D.new()
+		marker.position = point(beat.position)
+		marker.set_meta("purpose", beat.purpose)
+		attach(marker, markers, beat.name)
 	var player = load("res://scenes/intro_player.tscn").instantiate()
-	player.position = Vector2(140, 236)
+	player.position = point(blueprint.spawn)
+	player.get_node("Camera2D").limit_right = int(blueprint.world_size[0])
+	player.get_node("Camera2D").limit_bottom = int(blueprint.world_size[1])
 	attach(player, level, "Player")
 	var packed := PackedScene.new()
 	var result := packed.pack(level)
@@ -126,7 +149,11 @@ func build() -> void:
 		push_error("Could not pack intro: %s" % result)
 		quit(1)
 		return
-	result = ResourceSaver.save(packed, "res://scenes/intro.tscn")
+	result = ResourceSaver.save(packed, output_path)
 	level.free()
-	print("INTRO_BUILD_RESULT=", result)
-	quit(0 if result == OK else 1)
+	print("BUILD_RESULT ", output_path, " = ", result)
+	if build_and_quit:
+		quit(0 if result == OK else 1)
+
+func point(values: Array) -> Vector2:
+	return Vector2(float(values[0]), float(values[1]))

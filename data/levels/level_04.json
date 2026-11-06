@@ -1,0 +1,536 @@
+{
+  "id": "level_04",
+  "title": "The Ward",
+  "world_size": [
+    1120,
+    756
+  ],
+  "spawn": [
+    100,
+    236
+  ],
+  "tile_size": [
+    28,
+    28
+  ],
+  "floor_rows": [
+    {
+      "row": 9,
+      "first_column": 1,
+      "last_column": 38,
+      "gaps": [
+        29,
+        30
+      ],
+      "crack_every": 7,
+      "connector_every": 11
+    },
+    {
+      "row": 16,
+      "first_column": 12,
+      "last_column": 38,
+      "gaps": [],
+      "crack_every": 8,
+      "connector_every": 0
+    },
+    {
+      "row": 24,
+      "first_column": 1,
+      "last_column": 38,
+      "gaps": [],
+      "crack_every": 9,
+      "connector_every": 0
+    }
+  ],
+  "shelves": [
+    [
+      15,
+      8
+    ],
+    [
+      16,
+      8
+    ],
+    [
+      17,
+      7
+    ],
+    [
+      18,
+      7
+    ],
+    [
+      19,
+      7
+    ],
+    [
+      20,
+      7
+    ],
+    [
+      31,
+      14
+    ],
+    [
+      32,
+      14
+    ],
+    [
+      33,
+      13
+    ],
+    [
+      34,
+      13
+    ],
+    [
+      15,
+      22
+    ],
+    [
+      16,
+      22
+    ],
+    [
+      24,
+      15
+    ],
+    [
+      23,
+      15
+    ],
+    [
+      22,
+      14
+    ],
+    [
+      21,
+      14
+    ],
+    [
+      20,
+      14
+    ],
+    [
+      19,
+      14
+    ],
+    [
+      27,
+      23
+    ],
+    [
+      26,
+      23
+    ],
+    [
+      28,
+      22
+    ],
+    [
+      29,
+      22
+    ],
+    [
+      30,
+      22
+    ],
+    [
+      31,
+      22
+    ]
+  ],
+  "solids": [
+    {
+      "name": "LeftWall",
+      "position": [
+        14,
+        378
+      ],
+      "size": [
+        28,
+        756
+      ]
+    },
+    {
+      "name": "RightWall",
+      "position": [
+        1106,
+        378
+      ],
+      "size": [
+        28,
+        756
+      ]
+    }
+  ],
+  "interactables": [
+    {
+      "name": "FirstLadder",
+      "kind": "ladder",
+      "position": [
+        840,
+        335
+      ],
+      "size": [
+        40,
+        230
+      ]
+    },
+    {
+      "name": "SecondLadder",
+      "kind": "ladder",
+      "position": [
+        308,
+        550
+      ],
+      "size": [
+        40,
+        252
+      ]
+    },
+    {
+      "name": "StairGate",
+      "kind": "exit",
+      "position": [
+        1043,
+        646
+      ],
+      "size": [
+        46,
+        60
+      ]
+    },
+    {
+      "name": "Shadow1",
+      "kind": "cover",
+      "position": [
+        200,
+        216
+      ],
+      "size": [
+        64,
+        72
+      ]
+    },
+    {
+      "name": "Shadow2",
+      "kind": "cover",
+      "position": [
+        385,
+        216
+      ],
+      "size": [
+        64,
+        72
+      ]
+    },
+    {
+      "name": "Shadow3",
+      "kind": "cover",
+      "position": [
+        660,
+        216
+      ],
+      "size": [
+        64,
+        72
+      ]
+    },
+    {
+      "name": "Shadow4",
+      "kind": "cover",
+      "position": [
+        780,
+        412
+      ],
+      "size": [
+        64,
+        72
+      ]
+    },
+    {
+      "name": "Shadow5",
+      "kind": "cover",
+      "position": [
+        400,
+        412
+      ],
+      "size": [
+        64,
+        72
+      ]
+    },
+    {
+      "name": "Shadow6",
+      "kind": "cover",
+      "position": [
+        740,
+        636
+      ],
+      "size": [
+        64,
+        72
+      ]
+    },
+    {
+      "name": "Shadow7",
+      "kind": "cover",
+      "position": [
+        990,
+        636
+      ],
+      "size": [
+        64,
+        72
+      ]
+    },
+    {
+      "name": "ExperimentRecords",
+      "kind": "note",
+      "position": [
+        300,
+        230
+      ],
+      "size": [
+        40,
+        54
+      ]
+    },
+    {
+      "name": "ContainmentEvidence",
+      "kind": "note",
+      "position": [
+        600,
+        414
+      ],
+      "size": [
+        40,
+        54
+      ]
+    },
+    {
+      "name": "BrotherWarning",
+      "kind": "brother",
+      "position": [
+        410,
+        414
+      ],
+      "size": [
+        40,
+        54
+      ]
+    },
+    {
+      "name": "FourthSigil",
+      "kind": "sigil",
+      "position": [
+        620,
+        647
+      ],
+      "size": [
+        40,
+        54
+      ]
+    }
+  ],
+  "guards": [
+    {
+      "name": "GalleryKeeper",
+      "position": [
+        580,
+        236
+      ],
+      "patrol_left": 550,
+      "patrol_right": 650,
+      "sick": false
+    },
+    {
+      "name": "PassageKeeper",
+      "position": [
+        600,
+        432
+      ],
+      "patrol_left": 470,
+      "patrol_right": 680,
+      "sick": false
+    },
+    {
+      "name": "LowerKeeper",
+      "position": [
+        855,
+        656
+      ],
+      "patrol_left": 810,
+      "patrol_right": 950,
+      "sick": false
+    }
+  ],
+  "beats": [
+    {
+      "name": "01_ExperimentRecords",
+      "position": [
+        300,
+        230
+      ],
+      "purpose": "Inspect the experiment records | draft story"
+    },
+    {
+      "name": "02_ContainmentEvidence",
+      "position": [
+        600,
+        425
+      ],
+      "purpose": "Examine the containment evidence | draft evidence; exact illness remains open"
+    },
+    {
+      "name": "03_BrotherWarning",
+      "position": [
+        410,
+        422
+      ],
+      "purpose": "Hear the warning about the ward | draft story"
+    },
+    {
+      "name": "04_FourthSigil",
+      "position": [
+        620,
+        647
+      ],
+      "purpose": "Place the penultimate sigil | draft story"
+    },
+    {
+      "name": "SealedWardDoor",
+      "position": [
+        560,
+        210
+      ],
+      "purpose": "Reusable quarantine door and containment art."
+    },
+    {
+      "name": "ExperimentChamber",
+      "position": [
+        830,
+        390
+      ],
+      "purpose": "Environmental evidence; no new enemy type required."
+    }
+  ],
+  "number": 4,
+  "opening": "Sealed rooms. Observation windows. No names on the charts.\nWhatever happened here was deliberate.",
+  "closing": "Cruelty is evident. So is the danger outside containment.",
+  "stations": [
+    {
+      "id": "ExperimentRecords",
+      "title": "Inspect the experiment records",
+      "position": [
+        300,
+        230
+      ],
+      "kind": "note",
+      "objective": "Inspect the experiment records",
+      "lines": [
+        [
+          "WARD RECORD",
+          "Restraints maintained after consent withdrawn.\nTrial continued despite deterioration."
+        ],
+        [
+          "MIRO",
+          "They wrote it down as if that made it acceptable."
+        ]
+      ],
+      "requires": [],
+      "status": "draft story"
+    },
+    {
+      "id": "ContainmentEvidence",
+      "title": "Examine the containment evidence",
+      "position": [
+        600,
+        414
+      ],
+      "kind": "note",
+      "objective": "Examine the containment evidence",
+      "lines": [
+        [
+          "OBSERVATION LOG \u2014 DRAFT",
+          "Symptoms appeared among staff after an isolation failure.\nThe cases were logged before the present unrest."
+        ],
+        [
+          "MIRO",
+          "The illness is real. That does not excuse this room."
+        ]
+      ],
+      "requires": [],
+      "status": "draft evidence; exact illness remains open"
+    },
+    {
+      "id": "BrotherWarning",
+      "title": "Hear the warning about the ward",
+      "position": [
+        410,
+        414
+      ],
+      "kind": "brother",
+      "objective": "Hear the warning about the ward",
+      "lines": [
+        [
+          "BROTHER",
+          "You saw the isolation records. This place has hurt people.\nIt may also be holding something back."
+        ],
+        [
+          "MIRO",
+          "And how many people are we allowed to hurt to keep it?"
+        ]
+      ],
+      "requires": [
+        "ExperimentRecords",
+        "ContainmentEvidence"
+      ],
+      "status": "draft story"
+    },
+    {
+      "id": "FourthSigil",
+      "title": "Place the penultimate sigil",
+      "position": [
+        620,
+        647
+      ],
+      "kind": "sigil",
+      "objective": "Place the penultimate sigil",
+      "lines": [
+        [
+          "MIRO",
+          "One more mark.\nI cannot pretend I did not read those records."
+        ]
+      ],
+      "requires": [
+        "BrotherWarning"
+      ],
+      "status": "draft story"
+    }
+  ],
+  "sources": [
+    {
+      "path": "docs/mirospec.md",
+      "section": "Level progression \u2014 4: The Ward"
+    },
+    {
+      "path": "docs/miroguide.pdf",
+      "section": "Page 8 \u2014 five-floor progression and narrative flow"
+    },
+    {
+      "path": "docs/class.md",
+      "section": "InteractableArea, BreakerPanel / SigilAnchor"
+    },
+    {
+      "path": "docs/miromeeting1.md",
+      "section": "Reusable components, control scheme, limited casualty-based dialogue"
+    },
+    {
+      "path": "docs/miromeeting2.md",
+      "section": "Reusable physics tiles, tiered layout and human art/layout review"
+    }
+  ],
+  "scope": "Playable layout scaffold with draft dialogue; systems explicitly marked as placeholders are not implemented."
+}

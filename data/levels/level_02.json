@@ -1,0 +1,520 @@
+{
+  "id": "level_02",
+  "title": "The Symptoms",
+  "world_size": [
+    1120,
+    756
+  ],
+  "spawn": [
+    100,
+    236
+  ],
+  "tile_size": [
+    28,
+    28
+  ],
+  "floor_rows": [
+    {
+      "row": 9,
+      "first_column": 1,
+      "last_column": 38,
+      "gaps": [
+        27,
+        28
+      ],
+      "crack_every": 7,
+      "connector_every": 11
+    },
+    {
+      "row": 16,
+      "first_column": 12,
+      "last_column": 38,
+      "gaps": [],
+      "crack_every": 8,
+      "connector_every": 0
+    },
+    {
+      "row": 24,
+      "first_column": 1,
+      "last_column": 38,
+      "gaps": [],
+      "crack_every": 9,
+      "connector_every": 0
+    }
+  ],
+  "shelves": [
+    [
+      15,
+      8
+    ],
+    [
+      16,
+      8
+    ],
+    [
+      17,
+      7
+    ],
+    [
+      18,
+      7
+    ],
+    [
+      19,
+      7
+    ],
+    [
+      20,
+      7
+    ],
+    [
+      31,
+      14
+    ],
+    [
+      32,
+      14
+    ],
+    [
+      33,
+      13
+    ],
+    [
+      34,
+      13
+    ],
+    [
+      15,
+      22
+    ],
+    [
+      16,
+      22
+    ],
+    [
+      24,
+      15
+    ],
+    [
+      23,
+      15
+    ],
+    [
+      22,
+      14
+    ],
+    [
+      21,
+      14
+    ],
+    [
+      20,
+      14
+    ],
+    [
+      19,
+      14
+    ],
+    [
+      27,
+      23
+    ],
+    [
+      26,
+      23
+    ],
+    [
+      28,
+      22
+    ],
+    [
+      29,
+      22
+    ],
+    [
+      30,
+      22
+    ],
+    [
+      31,
+      22
+    ]
+  ],
+  "solids": [
+    {
+      "name": "LeftWall",
+      "position": [
+        14,
+        378
+      ],
+      "size": [
+        28,
+        756
+      ]
+    },
+    {
+      "name": "RightWall",
+      "position": [
+        1106,
+        378
+      ],
+      "size": [
+        28,
+        756
+      ]
+    }
+  ],
+  "interactables": [
+    {
+      "name": "FirstLadder",
+      "kind": "ladder",
+      "position": [
+        784,
+        335
+      ],
+      "size": [
+        40,
+        230
+      ]
+    },
+    {
+      "name": "SecondLadder",
+      "kind": "ladder",
+      "position": [
+        308,
+        550
+      ],
+      "size": [
+        40,
+        252
+      ]
+    },
+    {
+      "name": "StairGate",
+      "kind": "exit",
+      "position": [
+        1043,
+        646
+      ],
+      "size": [
+        46,
+        60
+      ]
+    },
+    {
+      "name": "Shadow1",
+      "kind": "cover",
+      "position": [
+        200,
+        216
+      ],
+      "size": [
+        64,
+        72
+      ]
+    },
+    {
+      "name": "Shadow2",
+      "kind": "cover",
+      "position": [
+        385,
+        216
+      ],
+      "size": [
+        64,
+        72
+      ]
+    },
+    {
+      "name": "Shadow3",
+      "kind": "cover",
+      "position": [
+        660,
+        216
+      ],
+      "size": [
+        64,
+        72
+      ]
+    },
+    {
+      "name": "Shadow4",
+      "kind": "cover",
+      "position": [
+        780,
+        412
+      ],
+      "size": [
+        64,
+        72
+      ]
+    },
+    {
+      "name": "Shadow5",
+      "kind": "cover",
+      "position": [
+        400,
+        412
+      ],
+      "size": [
+        64,
+        72
+      ]
+    },
+    {
+      "name": "Shadow6",
+      "kind": "cover",
+      "position": [
+        740,
+        636
+      ],
+      "size": [
+        64,
+        72
+      ]
+    },
+    {
+      "name": "Shadow7",
+      "kind": "cover",
+      "position": [
+        990,
+        636
+      ],
+      "size": [
+        64,
+        72
+      ]
+    },
+    {
+      "name": "SickPrisoner",
+      "kind": "note",
+      "position": [
+        300,
+        230
+      ],
+      "size": [
+        40,
+        54
+      ]
+    },
+    {
+      "name": "BrotherOffer",
+      "kind": "brother",
+      "position": [
+        580,
+        226
+      ],
+      "size": [
+        40,
+        54
+      ]
+    },
+    {
+      "name": "TransferLedger",
+      "kind": "note",
+      "position": [
+        650,
+        414
+      ],
+      "size": [
+        40,
+        54
+      ]
+    },
+    {
+      "name": "SecondSigil",
+      "kind": "sigil",
+      "position": [
+        620,
+        647
+      ],
+      "size": [
+        40,
+        54
+      ]
+    }
+  ],
+  "guards": [
+    {
+      "name": "GalleryKeeper",
+      "position": [
+        580,
+        236
+      ],
+      "patrol_left": 550,
+      "patrol_right": 650,
+      "sick": false
+    },
+    {
+      "name": "PassageKeeper",
+      "position": [
+        600,
+        432
+      ],
+      "patrol_left": 470,
+      "patrol_right": 680,
+      "sick": false
+    },
+    {
+      "name": "LowerKeeper",
+      "position": [
+        855,
+        656
+      ],
+      "patrol_left": 810,
+      "patrol_right": 950,
+      "sick": false
+    }
+  ],
+  "beats": [
+    {
+      "name": "01_SickPrisoner",
+      "position": [
+        300,
+        230
+      ],
+      "purpose": "Observe the sick prisoner | draft story"
+    },
+    {
+      "name": "02_BrotherOffer",
+      "position": [
+        580,
+        226
+      ],
+      "purpose": "Listen to the surrender offer | draft story"
+    },
+    {
+      "name": "03_TransferLedger",
+      "position": [
+        650,
+        425
+      ],
+      "purpose": "Read the indiscriminate transfer order | draft story"
+    },
+    {
+      "name": "04_SecondSigil",
+      "position": [
+        620,
+        647
+      ],
+      "purpose": "Place the second sigil | draft story"
+    },
+    {
+      "name": "PrisonerIllnessAnimation",
+      "position": [
+        300,
+        236
+      ],
+      "purpose": "Replace note stand-in with symptomatic prisoner scene."
+    }
+  ],
+  "number": 2,
+  "opening": "Below the cells, the coughing has names.\nSome doors hold the sick. Others hold anyone who stood beside them.",
+  "closing": "A surrender offer refused; the second mark remains.",
+  "stations": [
+    {
+      "id": "SickPrisoner",
+      "title": "Observe the sick prisoner",
+      "position": [
+        300,
+        230
+      ],
+      "kind": "note",
+      "objective": "Observe the sick prisoner",
+      "lines": [
+        [
+          "PRISONER",
+          "They took everyone in our room. Some of us were never sick.\nI cannot stop shaking. Please... stand back."
+        ]
+      ],
+      "requires": [],
+      "status": "draft story"
+    },
+    {
+      "id": "BrotherOffer",
+      "title": "Listen to the surrender offer",
+      "position": [
+        580,
+        226
+      ],
+      "kind": "brother",
+      "objective": "Listen to the surrender offer",
+      "lines": [
+        [
+          "THE VOICE",
+          "Come back. Let me take you out of here.\nWe used to trust each other."
+        ],
+        [
+          "MIRO",
+          "Then tell me why these doors are locked from the outside."
+        ]
+      ],
+      "requires": [
+        "SickPrisoner"
+      ],
+      "status": "draft story"
+    },
+    {
+      "id": "TransferLedger",
+      "title": "Read the indiscriminate transfer order",
+      "position": [
+        650,
+        414
+      ],
+      "kind": "note",
+      "objective": "Read the indiscriminate transfer order",
+      "lines": [
+        [
+          "TRANSFER LEDGER",
+          "All occupants of affected rooms: detention.\nSymptoms are not required for transfer."
+        ]
+      ],
+      "requires": [],
+      "status": "draft story"
+    },
+    {
+      "id": "SecondSigil",
+      "title": "Place the second sigil",
+      "position": [
+        620,
+        647
+      ],
+      "kind": "sigil",
+      "objective": "Place the second sigil",
+      "lines": [
+        [
+          "MIRO",
+          "Another support. Another mark.\nI wish I remembered why this feels familiar."
+        ]
+      ],
+      "requires": [
+        "BrotherOffer",
+        "TransferLedger"
+      ],
+      "status": "draft story"
+    }
+  ],
+  "sources": [
+    {
+      "path": "docs/mirospec.md",
+      "section": "Level progression \u2014 2: The Symptoms"
+    },
+    {
+      "path": "docs/miroguide.pdf",
+      "section": "Page 8 \u2014 five-floor progression and narrative flow"
+    },
+    {
+      "path": "docs/class.md",
+      "section": "Guard, Cloak / Blanket, Ladder"
+    },
+    {
+      "path": "docs/miromeeting1.md",
+      "section": "Reusable components, control scheme, limited casualty-based dialogue"
+    },
+    {
+      "path": "docs/miromeeting2.md",
+      "section": "Reusable physics tiles, tiered layout and human art/layout review"
+    }
+  ],
+  "scope": "Playable layout scaffold with draft dialogue; systems explicitly marked as placeholders are not implemented."
+}

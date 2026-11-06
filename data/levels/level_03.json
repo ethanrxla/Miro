@@ -1,0 +1,533 @@
+{
+  "id": "level_03",
+  "title": "The Order",
+  "world_size": [
+    1120,
+    756
+  ],
+  "spawn": [
+    100,
+    236
+  ],
+  "tile_size": [
+    28,
+    28
+  ],
+  "floor_rows": [
+    {
+      "row": 9,
+      "first_column": 1,
+      "last_column": 38,
+      "gaps": [
+        23,
+        24
+      ],
+      "crack_every": 7,
+      "connector_every": 11
+    },
+    {
+      "row": 16,
+      "first_column": 12,
+      "last_column": 38,
+      "gaps": [],
+      "crack_every": 8,
+      "connector_every": 0
+    },
+    {
+      "row": 24,
+      "first_column": 1,
+      "last_column": 38,
+      "gaps": [],
+      "crack_every": 9,
+      "connector_every": 0
+    }
+  ],
+  "shelves": [
+    [
+      15,
+      8
+    ],
+    [
+      16,
+      8
+    ],
+    [
+      17,
+      7
+    ],
+    [
+      18,
+      7
+    ],
+    [
+      19,
+      7
+    ],
+    [
+      20,
+      7
+    ],
+    [
+      31,
+      14
+    ],
+    [
+      32,
+      14
+    ],
+    [
+      33,
+      13
+    ],
+    [
+      34,
+      13
+    ],
+    [
+      15,
+      22
+    ],
+    [
+      16,
+      22
+    ],
+    [
+      22,
+      14
+    ],
+    [
+      21,
+      14
+    ],
+    [
+      20,
+      14
+    ],
+    [
+      19,
+      14
+    ],
+    [
+      27,
+      23
+    ],
+    [
+      26,
+      23
+    ],
+    [
+      28,
+      22
+    ],
+    [
+      29,
+      22
+    ],
+    [
+      30,
+      22
+    ],
+    [
+      31,
+      22
+    ]
+  ],
+  "solids": [
+    {
+      "name": "LeftWall",
+      "position": [
+        14,
+        378
+      ],
+      "size": [
+        28,
+        756
+      ]
+    },
+    {
+      "name": "RightWall",
+      "position": [
+        1106,
+        378
+      ],
+      "size": [
+        28,
+        756
+      ]
+    }
+  ],
+  "interactables": [
+    {
+      "name": "FirstLadder",
+      "kind": "ladder",
+      "position": [
+        672,
+        335
+      ],
+      "size": [
+        40,
+        230
+      ]
+    },
+    {
+      "name": "SecondLadder",
+      "kind": "ladder",
+      "position": [
+        308,
+        550
+      ],
+      "size": [
+        40,
+        252
+      ]
+    },
+    {
+      "name": "StairGate",
+      "kind": "exit",
+      "position": [
+        1043,
+        646
+      ],
+      "size": [
+        46,
+        60
+      ]
+    },
+    {
+      "name": "Shadow1",
+      "kind": "cover",
+      "position": [
+        200,
+        216
+      ],
+      "size": [
+        64,
+        72
+      ]
+    },
+    {
+      "name": "Shadow2",
+      "kind": "cover",
+      "position": [
+        385,
+        216
+      ],
+      "size": [
+        64,
+        72
+      ]
+    },
+    {
+      "name": "Shadow3",
+      "kind": "cover",
+      "position": [
+        660,
+        216
+      ],
+      "size": [
+        64,
+        72
+      ]
+    },
+    {
+      "name": "Shadow4",
+      "kind": "cover",
+      "position": [
+        780,
+        412
+      ],
+      "size": [
+        64,
+        72
+      ]
+    },
+    {
+      "name": "Shadow5",
+      "kind": "cover",
+      "position": [
+        400,
+        412
+      ],
+      "size": [
+        64,
+        72
+      ]
+    },
+    {
+      "name": "Shadow6",
+      "kind": "cover",
+      "position": [
+        740,
+        636
+      ],
+      "size": [
+        64,
+        72
+      ]
+    },
+    {
+      "name": "Shadow7",
+      "kind": "cover",
+      "position": [
+        990,
+        636
+      ],
+      "size": [
+        64,
+        72
+      ]
+    },
+    {
+      "name": "RemoteTerminal",
+      "kind": "note",
+      "position": [
+        300,
+        230
+      ],
+      "size": [
+        40,
+        54
+      ]
+    },
+    {
+      "name": "RankRecord",
+      "kind": "note",
+      "position": [
+        570,
+        220
+      ],
+      "size": [
+        40,
+        54
+      ]
+    },
+    {
+      "name": "BrotherReveal",
+      "kind": "brother",
+      "position": [
+        620,
+        414
+      ],
+      "size": [
+        40,
+        54
+      ]
+    },
+    {
+      "name": "ThirdSigil",
+      "kind": "sigil",
+      "position": [
+        620,
+        647
+      ],
+      "size": [
+        40,
+        54
+      ]
+    }
+  ],
+  "guards": [
+    {
+      "name": "GalleryKeeper",
+      "position": [
+        580,
+        236
+      ],
+      "patrol_left": 550,
+      "patrol_right": 650,
+      "sick": false
+    },
+    {
+      "name": "PassageKeeper",
+      "position": [
+        600,
+        432
+      ],
+      "patrol_left": 470,
+      "patrol_right": 680,
+      "sick": false
+    },
+    {
+      "name": "LowerKeeper",
+      "position": [
+        855,
+        656
+      ],
+      "patrol_left": 810,
+      "patrol_right": 950,
+      "sick": false
+    }
+  ],
+  "beats": [
+    {
+      "name": "01_RemoteTerminal",
+      "position": [
+        300,
+        230
+      ],
+      "purpose": "Disable the checkpoint controls | mechanic placeholder"
+    },
+    {
+      "name": "02_RankRecord",
+      "position": [
+        570,
+        230
+      ],
+      "purpose": "Inspect the former-rank record | draft story"
+    },
+    {
+      "name": "03_BrotherReveal",
+      "position": [
+        620,
+        422
+      ],
+      "purpose": "Confront the familiar voice | draft story"
+    },
+    {
+      "name": "04_ThirdSigil",
+      "position": [
+        620,
+        647
+      ],
+      "purpose": "Place the third sigil | draft story"
+    },
+    {
+      "name": "SecurityCameraA",
+      "position": [
+        450,
+        180
+      ],
+      "purpose": "Sweeping visible cone; raycast detection; linked to RemoteTerminal."
+    },
+    {
+      "name": "SecurityCameraB",
+      "position": [
+        820,
+        370
+      ],
+      "purpose": "Second checkpoint camera; shared terminal disable signal."
+    },
+    {
+      "name": "CheckpointDoor",
+      "position": [
+        650,
+        220
+      ],
+      "purpose": "Gate opens after terminal reprogram or loud breach branch."
+    }
+  ],
+  "number": 3,
+  "opening": "A checkpoint divides the tower. The uniforms feel familiar.\nThe records beyond it may explain why.",
+  "closing": "The former Keeper knows who is calling: his brother.",
+  "stations": [
+    {
+      "id": "RemoteTerminal",
+      "title": "Disable the checkpoint controls",
+      "position": [
+        300,
+        230
+      ],
+      "kind": "note",
+      "objective": "Disable the checkpoint controls",
+      "lines": [
+        [
+          "TERMINAL BLOCKOUT",
+          "Security-console interaction point.\nHook: one-second reprogram action disables linked cameras.\nThis station currently records the milestone only."
+        ]
+      ],
+      "requires": [],
+      "status": "mechanic placeholder"
+    },
+    {
+      "id": "RankRecord",
+      "title": "Inspect the former-rank record",
+      "position": [
+        570,
+        220
+      ],
+      "kind": "note",
+      "objective": "Inspect the former-rank record",
+      "lines": [
+        [
+          "PERSONNEL RECORD",
+          "Miro \u2014 former Keeper. Access revoked.\nCharge: treason."
+        ],
+        [
+          "MIRO",
+          "My name. Their uniform. I was one of them."
+        ]
+      ],
+      "requires": [
+        "RemoteTerminal"
+      ],
+      "status": "draft story"
+    },
+    {
+      "id": "BrotherReveal",
+      "title": "Confront the familiar voice",
+      "position": [
+        620,
+        414
+      ],
+      "kind": "brother",
+      "objective": "Confront the familiar voice",
+      "lines": [
+        [
+          "BROTHER",
+          "You are my brother. You served beside me.\nWe both bear responsibility for what this order became."
+        ],
+        [
+          "MIRO",
+          "Then neither of us gets to look away."
+        ]
+      ],
+      "requires": [
+        "RankRecord"
+      ],
+      "status": "draft story"
+    },
+    {
+      "id": "ThirdSigil",
+      "title": "Place the third sigil",
+      "position": [
+        620,
+        647
+      ],
+      "kind": "sigil",
+      "objective": "Place the third sigil",
+      "lines": [
+        [
+          "MIRO",
+          "A Keeper would know where this belongs.\nThat is what frightens me."
+        ]
+      ],
+      "requires": [
+        "BrotherReveal"
+      ],
+      "status": "draft story"
+    }
+  ],
+  "sources": [
+    {
+      "path": "docs/mirospec.md",
+      "section": "Level progression \u2014 3: The Order"
+    },
+    {
+      "path": "docs/miroguide.pdf",
+      "section": "Page 8 \u2014 five-floor progression and narrative flow"
+    },
+    {
+      "path": "docs/class.md",
+      "section": "RemoteTerminal, SecurityCamera, Door"
+    },
+    {
+      "path": "docs/miromeeting1.md",
+      "section": "Reusable components, control scheme, limited casualty-based dialogue"
+    },
+    {
+      "path": "docs/miromeeting2.md",
+      "section": "Reusable physics tiles, tiered layout and human art/layout review"
+    }
+  ],
+  "scope": "Playable layout scaffold with draft dialogue; systems explicitly marked as placeholders are not implemented."
+}

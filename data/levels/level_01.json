@@ -1,0 +1,496 @@
+{
+  "id": "level_01",
+  "title": "The Prisoner",
+  "world_size": [
+    1120,
+    756
+  ],
+  "spawn": [
+    140,
+    236
+  ],
+  "tile_size": [
+    28,
+    28
+  ],
+  "floor_rows": [
+    {
+      "row": 9,
+      "first_column": 1,
+      "last_column": 38,
+      "gaps": [
+        25,
+        26
+      ],
+      "crack_every": 7,
+      "connector_every": 11
+    },
+    {
+      "row": 16,
+      "first_column": 12,
+      "last_column": 38,
+      "gaps": [],
+      "crack_every": 8,
+      "connector_every": 0
+    },
+    {
+      "row": 24,
+      "first_column": 1,
+      "last_column": 38,
+      "gaps": [],
+      "crack_every": 9,
+      "connector_every": 0
+    }
+  ],
+  "shelves": [
+    [
+      15,
+      8
+    ],
+    [
+      16,
+      8
+    ],
+    [
+      17,
+      7
+    ],
+    [
+      18,
+      7
+    ],
+    [
+      19,
+      7
+    ],
+    [
+      20,
+      7
+    ],
+    [
+      31,
+      14
+    ],
+    [
+      32,
+      14
+    ],
+    [
+      33,
+      13
+    ],
+    [
+      34,
+      13
+    ],
+    [
+      15,
+      22
+    ],
+    [
+      16,
+      22
+    ],
+    [
+      24,
+      15
+    ],
+    [
+      23,
+      15
+    ],
+    [
+      22,
+      14
+    ],
+    [
+      21,
+      14
+    ],
+    [
+      20,
+      14
+    ],
+    [
+      19,
+      14
+    ],
+    [
+      27,
+      23
+    ],
+    [
+      26,
+      23
+    ],
+    [
+      28,
+      22
+    ],
+    [
+      29,
+      22
+    ],
+    [
+      30,
+      22
+    ],
+    [
+      31,
+      22
+    ]
+  ],
+  "solids": [
+    {
+      "name": "LeftWall",
+      "position": [
+        14,
+        378
+      ],
+      "size": [
+        28,
+        756
+      ]
+    },
+    {
+      "name": "RightWall",
+      "position": [
+        1106,
+        378
+      ],
+      "size": [
+        28,
+        756
+      ]
+    },
+    {
+      "name": "CellDoor",
+      "position": [
+        253,
+        196
+      ],
+      "size": [
+        8,
+        112
+      ]
+    }
+  ],
+  "interactables": [
+    {
+      "name": "Bed",
+      "kind": "bed",
+      "position": [
+        112,
+        239
+      ],
+      "size": [
+        54,
+        30
+      ]
+    },
+    {
+      "name": "CellLock",
+      "kind": "door",
+      "position": [
+        253,
+        220
+      ],
+      "size": [
+        16,
+        64
+      ]
+    },
+    {
+      "name": "CellShadow",
+      "kind": "cover",
+      "position": [
+        180,
+        216
+      ],
+      "size": [
+        65,
+        72
+      ]
+    },
+    {
+      "name": "FirstRefuge",
+      "kind": "cover",
+      "position": [
+        322,
+        216
+      ],
+      "size": [
+        52,
+        72
+      ]
+    },
+    {
+      "name": "GalleryShadow",
+      "kind": "cover",
+      "position": [
+        385,
+        216
+      ],
+      "size": [
+        60,
+        72
+      ]
+    },
+    {
+      "name": "StairShadow",
+      "kind": "cover",
+      "position": [
+        660,
+        216
+      ],
+      "size": [
+        62,
+        72
+      ]
+    },
+    {
+      "name": "FirstLadder",
+      "kind": "ladder",
+      "position": [
+        728,
+        335
+      ],
+      "size": [
+        40,
+        230
+      ]
+    },
+    {
+      "name": "LandingShadow",
+      "kind": "cover",
+      "position": [
+        780,
+        412
+      ],
+      "size": [
+        65,
+        72
+      ]
+    },
+    {
+      "name": "PassageShadow",
+      "kind": "cover",
+      "position": [
+        400,
+        412
+      ],
+      "size": [
+        64,
+        72
+      ]
+    },
+    {
+      "name": "SecondLadder",
+      "kind": "ladder",
+      "position": [
+        308,
+        550
+      ],
+      "size": [
+        40,
+        252
+      ]
+    },
+    {
+      "name": "LowerShadow",
+      "kind": "cover",
+      "position": [
+        740,
+        636
+      ],
+      "size": [
+        70,
+        72
+      ]
+    },
+    {
+      "name": "ExitShadow",
+      "kind": "cover",
+      "position": [
+        990,
+        636
+      ],
+      "size": [
+        62,
+        72
+      ]
+    },
+    {
+      "name": "SigilAnchor",
+      "kind": "sigil",
+      "position": [
+        620,
+        647
+      ],
+      "size": [
+        30,
+        50
+      ]
+    },
+    {
+      "name": "StairGate",
+      "kind": "exit",
+      "position": [
+        1043,
+        646
+      ],
+      "size": [
+        46,
+        60
+      ]
+    },
+    {
+      "name": "VoiceGate",
+      "kind": "brother",
+      "position": [
+        680,
+        226
+      ],
+      "size": [
+        44,
+        55
+      ]
+    },
+    {
+      "name": "QuarantineOrder",
+      "kind": "note",
+      "position": [
+        870,
+        425
+      ],
+      "size": [
+        22,
+        30
+      ]
+    }
+  ],
+  "guards": [
+    {
+      "name": "CorruptKeeper",
+      "position": [
+        280,
+        236
+      ],
+      "patrol_left": 280,
+      "patrol_right": 365,
+      "sick": true
+    },
+    {
+      "name": "GalleryKeeper",
+      "position": [
+        580,
+        236
+      ],
+      "patrol_left": 550,
+      "patrol_right": 650,
+      "sick": false
+    },
+    {
+      "name": "PassageKeeper",
+      "position": [
+        600,
+        432
+      ],
+      "patrol_left": 470,
+      "patrol_right": 680,
+      "sick": false
+    },
+    {
+      "name": "LowerKeeper",
+      "position": [
+        855,
+        656
+      ],
+      "patrol_left": 810,
+      "patrol_right": 950,
+      "sick": false
+    }
+  ],
+  "beats": [
+    {
+      "name": "01_WakeInCell",
+      "position": [
+        140,
+        236
+      ],
+      "purpose": "Amnesia, Keeper corruption and sickness; E dialogue and bed supplies."
+    },
+    {
+      "name": "02_EscapeChoice",
+      "position": [
+        240,
+        236
+      ],
+      "purpose": "Key theft, reach-through shank or C4 lock breach."
+    },
+    {
+      "name": "03_FirstCover",
+      "position": [
+        310,
+        236
+      ],
+      "purpose": "Blanket concealment; wait for patrol to look away."
+    },
+    {
+      "name": "04_HighRoute",
+      "position": [
+        510,
+        181
+      ],
+      "purpose": "Jumping, sight lines and optional combat."
+    },
+    {
+      "name": "05_FamiliarVoice",
+      "position": [
+        660,
+        236
+      ],
+      "purpose": "Brother speaks beyond gate; identity remains mysterious."
+    },
+    {
+      "name": "06_FirstDescent",
+      "position": [
+        728,
+        335
+      ],
+      "purpose": "W/S ladder descent; guards stay on their tier."
+    },
+    {
+      "name": "07_PatrolPassage",
+      "position": [
+        590,
+        377
+      ],
+      "purpose": "Simple patrol bypass; quarantine order is optional."
+    },
+    {
+      "name": "08_LowerDescent",
+      "position": [
+        308,
+        550
+      ],
+      "purpose": "Second ladder into lower vault."
+    },
+    {
+      "name": "09_FirstSigil",
+      "position": [
+        620,
+        647
+      ],
+      "purpose": "Required idempotent mark on structural support."
+    },
+    {
+      "name": "10_Exit",
+      "position": [
+        1043,
+        646
+      ],
+      "purpose": "Finish Level 1; reserve Level 2 mechanics for later."
+    }
+  ]
+}

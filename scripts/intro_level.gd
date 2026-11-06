@@ -30,6 +30,8 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	setup_inputs()
 	player.level = self
+	if has_node("LevelPlan/PlayerSpawn"):
+		player.global_position = $LevelPlan/PlayerSpawn.global_position
 	for guard in guards():
 		guard.level = self
 	build_hud()
@@ -166,7 +168,8 @@ func has_floor_below(point: Vector2) -> bool:
 
 func can_melee_reach(from: Vector2, to: Vector2) -> bool:
 	# The cell bars permit a reach-through attack on the nearby keeper.
-	if not door_open and from.x < 253 and to.x > 253 and to.x < 291 and absf(from.y - to.y) < 25:
+	var lock_position: Vector2 = $Interactables/CellLock.global_position
+	if not door_open and from.x < lock_position.x and to.x > lock_position.x and to.x < lock_position.x + 38 and absf(from.y - to.y) < 25 and absf(from.y - lock_position.y) < 40:
 		return true
 	return clear_sight(from, to)
 
@@ -385,4 +388,4 @@ func build_hud() -> void:
 
 func _draw() -> void:
 	if shot_flash > 0:
-		draw_circle(Vector2(253, 220), (0.4 - shot_flash) * 160, Color(0.95, 0.83, 0.67, shot_flash))
+		draw_circle(to_local($Interactables/CellLock.global_position), (0.4 - shot_flash) * 160, Color(0.95, 0.83, 0.67, shot_flash))

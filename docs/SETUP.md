@@ -51,4 +51,4 @@ https://godotengine.org/asset-library/asset/5245 is IvanMurzak/Godot-MCP, a sepa
 - The upstream headless load_sprite helper emits a dummy-renderer texture RID cleanup warning at exit; the saved scene and texture are valid. The actual sandbox run does not emit this warning.
 - Re-run integration check: `node C:\towerdefense\MCP\godot-mcp\smoke-test.mjs`.
 
-Setup additions are local and uncommitted. Nothing has been pushed to GitHub.
+The initial setup and intro were pushed in commit `40e1c5a`. See Git status for subsequent local changes.

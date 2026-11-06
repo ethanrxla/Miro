@@ -36,6 +36,8 @@ Losing sight starts a search at a fixed last-known position. It does not track t
 
 ## Editing
 
+See [Level 1 scaffold](LEVEL_01_SCAFFOLD.md) for the editable blueprint, named beats, reusable scene hierarchy and requirement-to-implementation map.
+
 - `scenes/intro.tscn`: saved, editable level hierarchy. Move interactables and guards in the editor; paint `StoneFloors` using the TileSet.
 - `assets/environment/prison_tiles.tres`: Julia's three original textures, 28 x 28 placement grid with 28 x 27 atlas regions, and solid collision polygons.
 - Reusable scenes: `intro_player`, `guard`, `cover_zone`, `ladder`, `sigil_anchor`, `level_exit`.
@@ -63,4 +65,4 @@ Run `Run Checks.ps1` from the project directory. It rejects engine/script errors
 
 All route tests use real Godot physics and player movement. Focused perception tests position actors explicitly to cover particular visibility cases; they do not substitute for the continuous playthroughs. Human pacing and art polish can be refined from this playable implementation.
 
-No GitHub push or commit was made.
+The initial intro was pushed in commit `40e1c5a`. Subsequent local changes are visible in Git status.

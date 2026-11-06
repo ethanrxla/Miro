@@ -36,7 +36,7 @@ func detect_player() -> bool:
 	if is_dead or not level or level.player.is_dead or level.player.is_concealed:
 		return false
 	# Prisoners inside the locked cell are not escapees yet.
-	if not level.door_open and level.player.global_position.x < 253:
+	if not level.door_open and level.player.global_position.x < level.get_node("Interactables/CellLock").global_position.x:
 		return false
 	return can_see_point(level.player.global_position)
 

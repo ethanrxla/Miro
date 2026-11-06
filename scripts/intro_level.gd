@@ -22,6 +22,8 @@ var hint_label: Label
 var message_label: Label
 var dialogue_panel: PanelContainer
 var dialogue_label: Label
+var speaker_label: Label
+var speaker_portrait: Control
 var overlay: PanelContainer
 var overlay_label: Label
 var shot_flash: float = 0.0
@@ -43,6 +45,9 @@ func _ready() -> void:
 		["KEEPER", "Don't play innocent. I know you...\nWait. That taste... I can't..."],
 		["MIRO", "His hands are shaking. The same marks as the others.\nHe's turned away. This might be my only chance."]
 	], "intro")
+	var launch_floor: int = get_node("/root/Campaign").launch_floor()
+	if launch_floor > 1:
+		get_tree().call_deferred("change_scene_to_file", "res://scenes/levels/level_%02d.tscn" % launch_floor)
 
 func setup_inputs() -> void:
 	var bindings := {"move_left": [KEY_A, KEY_LEFT], "move_right": [KEY_D, KEY_RIGHT], "climb_up": [KEY_W, KEY_UP], "climb_down": [KEY_S, KEY_DOWN], "jump": [KEY_SPACE], "dodge": [KEY_C], "attack": [KEY_1], "cloak": [KEY_2], "explosive": [KEY_3], "fire": [KEY_4], "interact": [KEY_E], "advance": [KEY_ENTER], "skip": [KEY_TAB], "pause_game": [KEY_ESCAPE], "retry": [KEY_R]}
@@ -99,21 +104,25 @@ func _process(delta: float) -> void:
 	player.detection_state = "SPOTTED" if pursuing else ("HIDDEN" if player.is_concealed else ("SEARCHING / unseen" if searching else "UNSEEN"))
 	status_label.text = "MIRO   " + "♥ ".repeat(maxi(0, player.health)) + "    " + player.detection_state + "\n" + ("1 Shank   2 Blanket   3 C4 ×%d   %s" % [player.c4_count, "Key" if player.has_key else "—"]) if player.has_supplies else "MIRO   ♥ ♥ ♥    CELL 07"
 	if player.has_gun:
-		status_label.text += "\n4  Keeper weapon ×%d" % player.ammunition
+		status_label.text += "  •  Gun ×%d" % player.ammunition
+	if player.has_supplies:
+		status_label.text += "\n" + player.stealth_status()
 	objective_label.text = objective()
 	hint_label.text = context_hint()
 	message_label.text = message if message_left > 0 else ""
 	dialogue_panel.visible = not dialogue.is_empty()
 	if not dialogue.is_empty():
 		var line: Array = dialogue[dialogue_index]
-		dialogue_label.text = "%s\n\n%s\n\n[E / Enter] Continue    [Tab] Skip" % [line[0], line[1]]
+		dialogue_label.text = line[1]
+		speaker_label.text = line[0]
+		speaker_portrait.speaker = line[0]
 	overlay.visible = paused or completed or player.is_dead
 	if completed:
 		overlay_label.text = "THE PRISONER\n\nThe first mark is set. Below, someone is coughing.\n\nEscape: %s   |   Casualties: %d\n\n[Enter] Descend to Level 2\n[R] Replay the floor" % [route, player.casualty_count]
 	elif player.is_dead:
 		overlay_label.text = "THE TOWER KEEPS ITS PRISONERS\n\n[R] Retry from the cell\nTry cover, a quiet key theft, or dodge the wind-up."
 	elif paused:
-		overlay_label.text = "PAUSED\n\nA / D  Move    Space  Jump    W / S  Ladders\nE  Interact / pickpocket    C  Dodge\n1  Shank    2  Blanket    3  C4    4  Looted gun\n\nStay still in shadow alcoves to conceal yourself.\nA body draws a search, not magical knowledge of you.\n\n[Esc] Resume    [R] Restart"
+		overlay_label.text = "PAUSED\n\nA / D Move    Space Jump    W / S Ladders\nE Interact    C Dodge\n1 Shank    2 Stealth    3 C4    4 Gun\n\nStealth lasts 5s, slows movement, then recharges for 8s.\nGuard contact, attacks, damage or dodging reveal you.\n\n[Esc] Resume    [R] Restart"
 	queue_redraw()
 
 func objective() -> String:
@@ -216,8 +225,8 @@ func context_hint() -> String:
 		return "[E] Listen at the barred gate"
 	if nearby("note"):
 		return "[E] Read the quarantine order"
-	if in_cover(player.global_position):
-		return "HIDDEN • moving or attacking reveals you" if player.is_concealed else "[2] Wrap yourself in the blanket. Stay still in shadow."
+	if player.is_concealed:
+		return "Move carefully • touching a Keeper breaks stealth"
 	if ladder_at(player.global_position):
 		return "[W / S] Climb. Keepers cannot use ladders."
 	return "A / D  Move    Space  Jump    C  Dodge    Esc  Controls"
@@ -318,7 +327,7 @@ func plant_c4() -> void:
 		notify("Move close to the cell lock to place C4.")
 	elif player.c4_count > 1:
 		player.c4_count -= 1
-		player.is_concealed = false
+		player.end_stealth()
 		route = "C4 breach"
 		open_door()
 		shot_flash = 0.4
@@ -384,9 +393,28 @@ func build_hud() -> void:
 	hint_label = label_at(hud, Vector2(14, 333), Vector2(612, 22), 11)
 	message_label = label_at(hud, Vector2(14, 295), Vector2(612, 34), 11)
 	message_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	dialogue_panel = panel_at(Vector2(24, 195), Vector2(592, 145))
-	dialogue_label = label_at(dialogue_panel, Vector2.ZERO, Vector2(560, 120), 12)
+	dialogue_panel = panel_at(Vector2(16, 222), Vector2(608, 126))
+	var columns := HBoxContainer.new()
+	columns.add_theme_constant_override("separation", 12)
+	dialogue_panel.add_child(columns)
+	var text_column := VBoxContainer.new()
+	text_column.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	columns.add_child(text_column)
+	dialogue_label = label_at(text_column, Vector2.ZERO, Vector2(430, 76), 12)
+	dialogue_label.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	dialogue_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	var footer := label_at(text_column, Vector2.ZERO, Vector2(430, 14), 9)
+	footer.text = "[E / Enter] Continue     [Tab] Skip"
+	var speaker_column := VBoxContainer.new()
+	speaker_column.custom_minimum_size.x = 100
+	columns.add_child(speaker_column)
+	speaker_portrait = Control.new()
+	speaker_portrait.set_script(load("res://scripts/dialogue_portrait.gd"))
+	speaker_portrait.custom_minimum_size = Vector2(100, 66)
+	speaker_column.add_child(speaker_portrait)
+	speaker_label = label_at(speaker_column, Vector2.ZERO, Vector2(100, 24), 10)
+	speaker_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	speaker_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	overlay = panel_at(Vector2(45, 65), Vector2(550, 240))
 	overlay_label = label_at(overlay, Vector2.ZERO, Vector2(510, 200), 13)
 	overlay_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER

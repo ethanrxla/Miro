@@ -5,9 +5,20 @@ var completed_sigils: Dictionary = {}
 var narrative_milestones: Dictionary = {}
 var boss_defeated := false
 var ending_complete := false
+var launch_consumed := false
+
+func launch_floor() -> int:
+	if launch_consumed:
+		return 1
+	launch_consumed = true
+	for argument in OS.get_cmdline_user_args():
+		if argument.begins_with("--level="):
+			return clampi(argument.trim_prefix("--level=").to_int(), 1, 5)
+	return 1
 
 func enter_floor(number: int) -> void:
 	current_floor = number
+	print("FLOOR_READY: ", number)
 	for floor_number in completed_sigils.keys():
 		if int(floor_number) >= number:
 			completed_sigils.erase(floor_number)

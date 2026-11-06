@@ -332,6 +332,18 @@
         40,
         54
       ]
+    },
+    {
+      "name": "WardRelease",
+      "kind": "note",
+      "position": [
+        430,
+        230
+      ],
+      "size": [
+        30,
+        38
+      ]
     }
   ],
   "guards": [
@@ -414,6 +426,14 @@
         390
       ],
       "purpose": "Environmental evidence; no new enemy type required."
+    },
+    {
+      "name": "WardRelease",
+      "position": [
+        430,
+        230
+      ],
+      "purpose": "Physical ward seal manual release after experiment records"
     }
   ],
   "number": 4,
@@ -441,6 +461,30 @@
       ],
       "requires": [],
       "status": "draft story"
+    },
+    {
+      "id": "WardRelease",
+      "title": "Release the ward seal",
+      "position": [
+        430,
+        230
+      ],
+      "kind": "note",
+      "objective": "Release the ward seal",
+      "lines": [
+        [
+          "WARD ACCESS",
+          "Manual release. The isolation seal opens."
+        ],
+        [
+          "MIRO",
+          "Someone kept these records behind a locked door."
+        ]
+      ],
+      "requires": [
+        "ExperimentRecords"
+      ],
+      "status": "implemented: manual release opens physical ward seal"
     },
     {
       "id": "ContainmentEvidence",
@@ -532,5 +576,29 @@
       "section": "Reusable physics tiles, tiered layout and human art/layout review"
     }
   ],
-  "scope": "Playable layout scaffold with draft dialogue; systems explicitly marked as placeholders are not implemented."
+  "scope": "Playable layout scaffold with draft dialogue; systems explicitly marked as placeholders are not implemented.",
+  "gates": [
+    {
+      "name": "WardSeal",
+      "position": [
+        520,
+        126
+      ],
+      "size": [
+        18,
+        252
+      ],
+      "unlock_milestone": "WardRelease"
+    }
+  ],
+  "props": [
+    {
+      "name": "IsolationChamber",
+      "kind": "ward_chamber",
+      "position": [
+        830,
+        430
+      ]
+    }
+  ]
 }

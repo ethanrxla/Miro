@@ -9,7 +9,10 @@ $checks = @(
     @('res://tools/test_remaining_levels.gd'),
     @('res://tools/test_security.gd'),
     @('res://tools/test_brother.gd'),
-    @('res://tools/test_ending.gd')
+    @('res://tools/test_ending.gd'),
+    @('res://tools/test_gates_and_loot.gd'),
+    @('res://tools/test_timed_stealth.gd'),
+    @('res://tools/test_dialogue_layout.gd')
 )
 New-Item -ItemType Directory -Force (Join-Path $PSScriptRoot 'tmp') | Out-Null
 $index = 0

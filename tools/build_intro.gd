@@ -113,6 +113,21 @@ func build() -> void:
 	attach(areas, level, "Interactables")
 	for item in blueprint.interactables:
 		area(item.name, item.kind, point(item.position), point(item.size))
+	var gates := Node2D.new()
+	attach(gates, level, "Gates")
+	for item in blueprint.get("gates", []):
+		var gate = load("res://scenes/progress_gate.tscn").instantiate()
+		gate.position = point(item.position)
+		gate.gate_size = point(item.size)
+		gate.unlock_milestone = item.unlock_milestone
+		attach(gate, gates, item.name)
+	var props := Node2D.new()
+	attach(props, level, "StoryProps")
+	for item in blueprint.get("props", []):
+		var prop = load("res://scenes/story_prop.tscn").instantiate()
+		prop.position = point(item.position)
+		prop.kind = item.kind
+		attach(prop, props, item.name)
 	if blueprint.has("stations"):
 		for station in blueprint.stations:
 			var label := Label.new()
@@ -146,7 +161,7 @@ func build() -> void:
 	var packed := PackedScene.new()
 	var result := packed.pack(level)
 	if result != OK:
-		push_error("Could not pack intro: %s" % result)
+		push_error("Could not pack level: %s" % result)
 		quit(1)
 		return
 	result = ResourceSaver.save(packed, output_path)

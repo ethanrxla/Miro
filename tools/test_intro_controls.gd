@@ -45,12 +45,13 @@ func run() -> void:
 	level.player.position = Vector2(180, 237)
 	await frames()
 	await key(KEY_2)
-	check(level.player.is_concealed, "2 activates blanket in shadow")
+	check(level.player.is_concealed, "2 activates temporary stealth")
 	await key(KEY_1)
 	check(not level.player.is_concealed, "1 shank breaks blanket concealment")
+	await frames(490)
 	await key(KEY_2)
 	await key(KEY_SPACE)
-	check(not level.player.is_concealed and level.player.velocity.y < 0, "Space jumps and breaks concealment")
+	check(level.player.is_concealed and level.player.velocity.y < 0, "Space jumps without breaking timed stealth")
 	await frames(50)
 	await key(KEY_C)
 	check(level.player.dodge_cooldown > 0, "C starts dodge cooldown")
@@ -76,6 +77,7 @@ func run() -> void:
 	keeper.last_known_position = Vector2(385, 237)
 	level.player.position = Vector2(385, 237)
 	level.player.is_concealed = true
+	level.player.stealth_remaining = 5
 	await frames(3)
 	var remembered: Vector2 = keeper.last_known_position
 	level.player.position = Vector2(180, 237)

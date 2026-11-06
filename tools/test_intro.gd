@@ -94,11 +94,11 @@ func run() -> void:
 	Input.action_press("move_right")
 	await frames(2)
 	Input.action_release("move_right")
-	check(not level.player.is_concealed, "Movement breaks concealment")
+	check(level.player.is_concealed, "Movement preserves timed stealth")
 	level.player.position = Vector2(600, 237)
 	await frames(3)
 	level.player.toggle_stealth()
-	check(not level.player.is_concealed, "Blanket outside shadow cannot conceal")
+	check(not level.player.is_concealed, "Manual cancellation ends stealth anywhere")
 	g.position = Vector2(570, 236)
 	g.facing = 1
 	check(g.detect_player(), "Visible player in facing cone detected")
@@ -110,6 +110,7 @@ func run() -> void:
 	# Body discovery creates search without revealing the hidden killer.
 	level.player.position = Vector2(660, 237)
 	await frames(3)
+	level.player.stealth_cooldown_left = 0
 	level.player.toggle_stealth()
 	var witness = level.get_node("Guards/GalleryKeeper")
 	witness.position = Vector2(580, 236)

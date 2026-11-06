@@ -529,5 +529,19 @@
       "section": "Reusable physics tiles, tiered layout and human art/layout review"
     }
   ],
-  "scope": "Playable layout scaffold with draft dialogue; systems explicitly marked as placeholders are not implemented."
+  "scope": "Playable layout scaffold with draft dialogue; systems explicitly marked as placeholders are not implemented.",
+  "gates": [
+    {
+      "name": "CheckpointGate",
+      "position": [
+        520,
+        126
+      ],
+      "size": [
+        18,
+        252
+      ],
+      "unlock_milestone": "RemoteTerminal"
+    }
+  ]
 }

@@ -516,5 +516,15 @@
       "section": "Reusable physics tiles, tiered layout and human art/layout review"
     }
   ],
-  "scope": "Playable layout scaffold with draft dialogue; systems explicitly marked as placeholders are not implemented."
+  "scope": "Playable layout scaffold with draft dialogue; systems explicitly marked as placeholders are not implemented.",
+  "props": [
+    {
+      "name": "SymptomaticPrisoner",
+      "kind": "sick_prisoner",
+      "position": [
+        300,
+        236
+      ]
+    }
+  ]
 }

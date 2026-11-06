@@ -4,6 +4,11 @@ extends BaseCharacter
 var level: Node2D
 var facing: float = 1.0
 var is_concealed: bool = false
+@export var stealth_duration := 5.0
+@export var stealth_cooldown := 8.0
+@export_range(0.1, 1.0) var stealth_speed_multiplier := 0.55
+var stealth_remaining := 0.0
+var stealth_cooldown_left := 0.0
 var casualty_count: int = 0
 var detection_state: String = "unseen"
 var has_supplies: bool = false
@@ -38,6 +43,11 @@ func _physics_process(delta: float) -> void:
 		velocity = Vector2.ZERO
 		update_visual(delta)
 		return
+	stealth_cooldown_left = maxf(0, stealth_cooldown_left - delta)
+	if is_concealed:
+		stealth_remaining = maxf(0, stealth_remaining - delta)
+		if stealth_remaining == 0:
+			end_stealth()
 	var direction := Input.get_axis("move_left", "move_right")
 	var vertical := Input.get_axis("climb_up", "climb_down")
 	var ladder = level.ladder_at(global_position)
@@ -49,29 +59,26 @@ func _physics_process(delta: float) -> void:
 		if is_on_floor() or climbing:
 			velocity.y = -290.0
 			climbing = false
-		is_concealed = false
-	if direction != 0.0 or vertical != 0.0:
-		is_concealed = false
 	if direction != 0.0:
 		facing = direction
 	if Input.is_action_just_pressed("dodge") and dodge_cooldown <= 0.0:
 		dodge_left = 0.22
 		dodge_cooldown = 0.85
-		is_concealed = false
-	velocity.x = direction * movement_speed
+		end_stealth()
+	var speed_multiplier := stealth_speed_multiplier if is_concealed else 1.0
+	velocity.x = direction * movement_speed * speed_multiplier
 	if dodge_left > 0.0:
 		velocity.x = facing * 245.0
 	if climbing:
-		velocity.y = vertical * 85.0
+		velocity.y = vertical * 85.0 * speed_multiplier
 		if direction == 0.0:
 			global_position.x = move_toward(global_position.x, ladder.global_position.x, delta * 120.0)
 	else:
 		velocity.y += 850.0 * delta
 	move_and_slide()
-	if is_concealed and not level.in_cover(global_position):
-		is_concealed = false
 	if Input.is_action_just_pressed("cloak"):
 		toggle_stealth()
+	check_guard_contact()
 	if Input.is_action_just_pressed("attack"):
 		shank()
 	if Input.is_action_just_pressed("explosive"):
@@ -83,13 +90,46 @@ func _physics_process(delta: float) -> void:
 	update_visual(delta)
 
 func toggle_stealth() -> void:
+	if level.controls_locked() or is_dead:
+		return
 	if not has_supplies:
 		level.notify("Your blanket is on the bed. Search it with E.")
-	elif level.in_cover(global_position) and is_on_floor():
-		is_concealed = not is_concealed
-		level.notify("Still. Let the shadows swallow you." if is_concealed else "You leave concealment.")
+	elif is_concealed:
+		end_stealth()
+	elif stealth_cooldown_left > 0:
+		level.notify("Stealth recharging: %.1fs" % stealth_cooldown_left)
 	else:
-		level.notify("Find a marked shadow alcove, stand still, then press 2.")
+		is_concealed = true
+		stealth_remaining = stealth_duration
+		check_guard_contact()
+
+func end_stealth() -> void:
+	if not is_concealed:
+		return
+	is_concealed = false
+	stealth_remaining = 0
+	stealth_cooldown_left = stealth_cooldown
+
+func check_guard_contact() -> void:
+	if not is_concealed:
+		return
+	var bounds := Rect2(global_position + Vector2(-7, -9), Vector2(14, 24))
+	for guard in level.guards():
+		if not guard.is_dead and bounds.intersects(Rect2(guard.global_position + Vector2(-7, -9), Vector2(14, 24))):
+			end_stealth()
+			guard.alert_state = IntroGuard.State.ALERT
+			guard.suspicion = 1.0
+			guard.sees_player = true
+			guard.last_known_position = global_position
+			level.notify("Cover blown — you touched a Keeper!")
+			return
+
+func stealth_status() -> String:
+	if is_concealed:
+		return "STEALTH %.1fs" % stealth_remaining
+	if stealth_cooldown_left > 0:
+		return "STEALTH %.1fs cooldown" % stealth_cooldown_left
+	return "STEALTH READY [2]"
 
 func shank() -> void:
 	if not has_supplies:
@@ -97,7 +137,7 @@ func shank() -> void:
 		return
 	if attack_cooldown > 0.0:
 		return
-	is_concealed = false
+	end_stealth()
 	attack_cooldown = 0.5
 	attack_flash = 0.16
 	for guard in level.guards():
@@ -116,7 +156,7 @@ func fire_gun() -> void:
 	ammunition -= 1
 	attack_cooldown = 0.65
 	attack_flash = 0.2
-	is_concealed = false
+	end_stealth()
 	level.make_noise(global_position, 600.0)
 	for guard in level.guards():
 		var difference: Vector2 = guard.global_position - global_position
@@ -132,7 +172,7 @@ func take_damage(amount: int) -> void:
 	if dodge_left > 0:
 		return
 	super.take_damage(amount)
-	is_concealed = false
+	end_stealth()
 
 func die() -> void:
 	if is_dead:

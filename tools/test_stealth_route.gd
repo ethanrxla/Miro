@@ -52,30 +52,25 @@ func run() -> void:
 	check(level.player.has_key, "Natural patrol permits quiet key theft")
 	level.interact()
 	await walk(310)
-	level.player.toggle_stealth()
+	if not level.player.is_concealed and level.player.stealth_cooldown_left <= 0:
+		level.player.toggle_stealth()
 	check(level.player.is_concealed, "Use first refuge immediately outside the cell")
-	for i in range(900):
-		var keeper = level.get_node("Guards/CorruptKeeper")
-		if keeper.alert_state == IntroGuard.State.PATROL and keeper.facing < 0 and keeper.position.x < 300:
-			break
-		await tick()
 	await walk(385)
-	level.player.toggle_stealth()
-	await tick(90)
-	check(level.player.is_concealed, "Wait under blanket in first gallery shadow")
-	for i in range(900):
-		var keeper = level.get_node("Guards/CorruptKeeper")
-		if keeper.alert_state == IntroGuard.State.PATROL and keeper.facing < 0:
-			break
-		await tick()
+	if not level.player.is_concealed and level.player.stealth_cooldown_left <= 0:
+		level.player.toggle_stealth()
+	check(level.player.is_concealed, "Timed stealth persists while crossing the gallery")
 	await walk(575)
 	await tick(10)
 	check(level.player.position.y < 200, "Upper staggered shelves provide high route")
+	while level.player.is_concealed or level.player.stealth_cooldown_left > 0:
+		await tick()
 	for i in range(600):
 		var guard = level.get_node("Guards/GalleryKeeper")
 		if guard.facing < 0 and guard.position.x < 575:
 			break
 		await tick()
+	if not level.player.is_concealed and level.player.stealth_cooldown_left <= 0:
+		level.player.toggle_stealth()
 	Input.action_press("jump")
 	await tick(1)
 	Input.action_release("jump")
@@ -84,43 +79,43 @@ func run() -> void:
 		if level.player.is_on_floor():
 			break
 		await tick()
-	level.player.toggle_stealth()
+	if not level.player.is_concealed and level.player.stealth_cooldown_left <= 0:
+		level.player.toggle_stealth()
 	await tick(35)
 	level.interact()
 	level.finish_dialogue()
 	check(level.brother_heard, "Quiet route reaches mysterious voice")
-	for i in range(900):
-		var keeper = level.get_node("Guards/GalleryKeeper")
-		if keeper.alert_state == IntroGuard.State.PATROL and keeper.facing < 0:
-			break
-		await tick()
-	print("LEAVING VOICE: ", level.get_node("Guards/GalleryKeeper").position, " face ", level.get_node("Guards/GalleryKeeper").facing, " state ", level.get_node("Guards/GalleryKeeper").alert_state, " hidden ",level.player.is_concealed)
 	await walk(728)
 	Input.action_press("climb_down")
-	await tick(160)
+	await tick(260)
 	Input.action_release("climb_down")
 	check(level.player.position.y > 420, "Stealth route descends first ladder")
 	await walk(590)
 	await tick(8)
 	check(level.player.position.y < 400, "Middle raised route bypasses floor patrol")
+	while level.player.is_concealed or level.player.stealth_cooldown_left > 0:
+		await tick()
 	for i in range(600):
 		var guard = level.get_node("Guards/PassageKeeper")
 		if guard.facing > 0 and guard.position.x > 620:
 			break
 		await tick()
-	await walk(400)
 	level.player.toggle_stealth()
+	await walk(400)
+	if not level.player.is_concealed and level.player.stealth_cooldown_left <= 0:
+		level.player.toggle_stealth()
 	await tick(45)
 	await walk(308)
 	Input.action_press("climb_down")
-	await tick(190)
+	await tick(300)
 	Input.action_release("climb_down")
 	await walk(620)
 	level.interact()
 	level.finish_dialogue()
 	check(level.sigil_placed, "Quiet route sets required sigil")
 	await walk(740)
-	level.player.toggle_stealth()
+	if not level.player.is_concealed and level.player.stealth_cooldown_left <= 0:
+		level.player.toggle_stealth()
 	await tick(45)
 	await walk(850)
 	await tick(8)
@@ -140,5 +135,3 @@ func run() -> void:
 	check(not spotted, "Stealth route never reaches confirmed detection")
 	print("STEALTH_ROUTE_RESULT failures=", failures.size())
 	quit(0 if failures.is_empty() else 1)
-
-

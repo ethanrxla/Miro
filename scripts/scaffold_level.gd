@@ -31,7 +31,7 @@ func _ready() -> void:
 			camera.level = self
 			add_child(camera)
 			connected_cameras.append(camera)
-	start_dialogue([[definition.title.to_upper(), definition.opening], ["BLOCKOUT", "Explore this floor with the existing movement and stealth controls.\n[E] tests story/objective stations. Named placeholders mark unfinished systems."]])
+	start_dialogue([[definition.title.to_upper(), definition.opening]])
 
 func _process(delta: float) -> void:
 	super._process(delta)
@@ -47,7 +47,7 @@ func _process(delta: float) -> void:
 				pending_milestone = "RemoteTerminal"
 				start_dialogue([["CHECKPOINT", "Reprogramming complete. Linked security cameras disabled."]], "milestone")
 	if completed:
-		overlay_label.text = "%s\n\nFloor scaffold complete.\n%s\n\n[R] Retry   [Enter] %s" % [definition.title.to_upper(), definition.closing, "Next scaffold" if definition.number < 5 else "Return to Level 1"]
+		overlay_label.text = "%s\n\n%s\n\n[R] Retry   [Enter] Descend" % [definition.title.to_upper(), definition.closing]
 		if int(definition.number) == 5:
 			overlay_label.text = "MIRO\n\nThe end.\n\n[R] Replay final floor   [Enter] New run"
 
@@ -86,10 +86,13 @@ func context_hint() -> String:
 	var station := station_nearby()
 	if not station.is_empty():
 		return "Completed: " + station.title if milestones.has(station.id) else "[E] " + station.title
+	var guard = closest_guard()
+	if guard and guard.is_dead and not guard.gun_taken:
+		return "[E] Search fallen Keeper"
 	if nearby("exit", 65):
-		return "[E] Exit this scaffold once all objectives are complete"
-	if in_cover(player.global_position):
-		return "HIDDEN • stay still" if player.is_concealed else "[2] Blanket in shadow"
+		return "[E] Descend once this floor's objectives are complete"
+	if player.is_concealed:
+		return "Move carefully • touching a Keeper breaks stealth"
 	if ladder_at(player.global_position):
 		return "[W / S] Climb"
 	return "A/D Move   Space Jump   C Dodge   1 Shank   2 Blanket   Esc Controls"
@@ -130,16 +133,27 @@ func interact() -> void:
 			return
 		start_dialogue(station.lines, "milestone")
 		return
+	var guard = closest_guard()
+	if guard and guard.is_dead and not guard.gun_taken:
+		guard.gun_taken = true
+		player.has_gun = true
+		player.ammunition += 2
+		notify("Taken: Keeper weapon and ammunition. [4] Fire; shots draw a search.")
+		return
 	if nearby("exit", 65):
 		if milestones.size() == definition.stations.size() and sigil_placed:
 			completed = true
 			player.velocity = Vector2.ZERO
 		else:
-			notify("Complete this floor's story stations and sigil before descending.")
+			notify("Follow the remaining objective before descending.")
 
 func finish_dialogue() -> void:
 	if dialogue_event == "milestone" and not pending_milestone.is_empty():
 		milestones[pending_milestone] = true
+		if has_node("Gates"):
+			for gate in $Gates.get_children():
+				if gate.unlock_milestone == pending_milestone:
+					gate.unlock()
 		var node = areas.get_node(NodePath(pending_milestone))
 		node.activated = true
 		node.queue_redraw()

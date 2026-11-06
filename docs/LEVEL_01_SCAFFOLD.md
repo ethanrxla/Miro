@@ -54,3 +54,7 @@ Julia's idle, jump, walk, standard, cracked and connector PNGs are already integ
 ## Validation
 
 Run `Run Checks.ps1`: three full escape-route playthroughs, keyboard/lifecycle checks, plus scaffold checks for spawn markers, shared tiles, reusable objects and independent collision sizing. The quiet route must finish without kills, damage or confirmed detection.
+
+## Superseding stealth and dialogue direction
+
+The current user-approved mechanic is timed mobile stealth anywhere, with duration/cooldown and contact reveal. Stationary shadow-only statements above describe the original scaffold. See [current gameplay decisions](GAMEPLAY_DECISIONS.md). Dialogue now uses a simple bottom panel with body text and controls on the left and a compact speaker token/name on the right.

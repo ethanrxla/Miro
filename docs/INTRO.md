@@ -12,7 +12,7 @@ Open `scenes/intro.tscn` in Godot and press F5, or use the Miro Play desktop sho
 | E | Interact, pickpocket, loot, unlock, advance dialogue |
 | Enter / Tab | Advance / skip dialogue |
 | 1 | Shank: one unaware hit, two alerted hits |
-| 2 | Toggle blanket concealment while stationary in a shadow alcove |
+| 2 | Activate/cancel temporary stealth anywhere (5s active, 8s cooldown, 55% movement speed) |
 | 3 | Breach the cell lock using C4 |
 | 4 | Fire a looted Keeper weapon |
 | C | Short dodge; brief protection from melee |
@@ -30,7 +30,7 @@ Follow the upper gallery to the barred voice encounter, descend the ladder, cros
 
 ## Detection rules
 
-Guards use facing, range, vertical separation, and a physics ray against solid world geometry. Brief sightings build suspicion; a sustained sighting confirms detection. A hidden player is not visible. Moving, climbing, jumping, attacking, or leaving cover cancels concealment. Guards telegraph a melee strike before hitting; the player has three hearts and a damage recovery window.
+Guards use facing, range, vertical separation, and a physics ray against solid world geometry. Brief sightings build suspicion; a sustained sighting confirms detection. A hidden player is not visible. Movement, climbing and jumping preserve concealment. Contact with a living guard immediately reveals Miro and alerts that guard. Attacking, firing, taking damage, dodging or manual cancellation also end stealth and start its cooldown. Timers pause during dialogue and pause menus. Guards telegraph a melee strike before hitting; the player has three hearts and a damage recovery window.
 
 Losing sight starts a search at a fixed last-known position. It does not track the hidden player's current position. Seeing a corpse starts a search at the corpse without revealing Miro. Bodies are remembered once per witness, avoiding endless retriggered searches. Noise attracts investigation; only actual sight confirms Miro's location. Guards stay on their own platforms and cannot climb ladders.
 
@@ -51,7 +51,7 @@ The supplied Oil 6 colors guide masonry, props, guards and interface. The bright
 
 ## Specification precedence
 
-Read all five supplied reference documents: class guide, both meetings, game specification and all eight pages of the PDF (including its flowcharts). Latest user direction takes precedence where these differ: protagonist is Miro, amnesia is explicit, the Keeper becomes ill after the opening exchange, and basic blanket stealth is introduced here rather than deferred entirely to Level 2. The scene follows the tiered reference sketch while keeping the later tower floors out of scope.
+Read all five supplied reference documents: class guide, both meetings, game specification and all eight pages of the PDF (including its flowcharts). Latest user direction takes precedence where these differ: protagonist is Miro, amnesia is explicit, the Keeper becomes ill after the opening exchange, and basic blanket stealth is introduced here rather than deferred entirely to Level 2. The scene follows the tiered reference sketch with the later floors linked through the completion screen. The latest stealth direction replaces stationary shadow-only concealment.
 
 ## Verification
 

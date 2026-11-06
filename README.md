@@ -12,3 +12,5 @@ The original movement sandbox remains in `scenes/asset_sandbox.tscn`.
 All five floors now have editable scene scaffolds. See [Level 1 sources and authoring](docs/LEVEL_01_SCAFFOLD.md) and [Levels 2–5 sources and unfinished systems](docs/LEVELS_02_05.md). Launch a specific floor with `./Play Level.ps1 -Level 2`. Later floors contain draft dialogue and explicit mechanic/cinematic placeholders.
 
 Playable milestone: linked five-floor progression, Level 3 sweeping cameras and one-second hacking, Level 5 two-attack boss and a skippable in-engine ending. Art remains provisional; see the per-floor guide for remaining work.
+
+Latest controls: press **2** for 5-second mobile stealth (8-second cooldown, 55% speed); contact with a living guard reveals Miro. Dialogue uses a simpler bottom text/speaker panel. See [current decisions](docs/GAMEPLAY_DECISIONS.md). Build with `Build Windows.ps1`, then validate standalone startup using `Check Windows Build.ps1`.

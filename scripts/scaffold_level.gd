@@ -158,6 +158,7 @@ func finish_dialogue() -> void:
 		node.activated = true
 		node.queue_redraw()
 		if node.kind == "sigil":
+			get_node("/root/SoundFX").play_sound("sigil", -16)
 			sigil_placed = true
 			player.c4_count = maxi(0, player.c4_count - 1)
 			make_noise(node.global_position, 220)

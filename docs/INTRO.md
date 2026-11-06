@@ -12,6 +12,7 @@ Open `scenes/intro.tscn` in Godot and press F5, or use the Miro Play desktop sho
 | E | Interact, pickpocket, loot, unlock, advance dialogue |
 | Enter / Tab | Advance / skip dialogue |
 | 1 | Shank: one unaware hit, two alerted hits |
+| M | Mute/unmute sound effects |
 | 2 | Activate/cancel temporary stealth anywhere (5s active, 8s cooldown, 55% movement speed) |
 | 3 | Breach the cell lock using C4 |
 | 4 | Fire a looted Keeper weapon |

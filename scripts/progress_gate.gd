@@ -23,6 +23,8 @@ func unlock() -> void:
 	if is_open:
 		return
 	is_open = true
+	if not Engine.is_editor_hint():
+		get_node("/root/SoundFX").play_sound("gate", -17)
 	collision_layer = 0
 	$CollisionShape2D.set_deferred("disabled", true)
 	queue_redraw()

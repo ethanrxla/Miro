@@ -11,6 +11,9 @@ func launch_floor() -> int:
 	if launch_consumed:
 		return 1
 	launch_consumed = true
+	if OS.has_feature("qa") and "--verify-playthrough" in OS.get_cmdline_user_args():
+		var runner = load("res://tools/export_playthrough.gd").new()
+		get_tree().root.call_deferred("add_child", runner)
 	for argument in OS.get_cmdline_user_args():
 		if argument.begins_with("--level="):
 			return clampi(argument.trim_prefix("--level=").to_int(), 1, 5)

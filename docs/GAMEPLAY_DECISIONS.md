@@ -29,3 +29,11 @@ Run `Build Windows.ps1` to create `build/windows/Miro.exe`. The release executab
 Launch the executable normally for a new run. For development, `Miro.exe -- --level=3` starts a specific floor. Starting a later floor is an independent test entry; it does not fabricate completed earlier sigils. Release builds do not accept Godot scene path overrides, so this argument is handled by the game itself.
 
 Source playthrough tests and standalone executable startup checks are separate validation steps. An exported five-floor startup smoke test does not constitute a full exported playthrough.
+
+## Exported playthrough verification
+
+`Check Exported Playthrough.ps1` builds a separate QA executable and runs a continuous physical playthrough from the intro through all five floors and the watched ending. It uses real scene transitions and inputs without teleporting actors or granting milestones. It verifies all five committed sigils and the boss/ending outcome (64 checks). QA automation is gated behind the `qa` export feature and is excluded from the normal release build. `Check Windows Build.ps1` separately smoke-tests each floor in the release executable.
+
+## Sound effects
+
+Seven effects were selected from the supplied Kenney All-in-1 archive: concrete steps, knife swing, impact, latch, sigil click, shot and collapse. Original archive paths are recorded in `assets/audio/sources.json`; original CC0 notices are retained beside the files and included in exported packs. Press **M** to mute/unmute; the preference persists in Godot's user settings directory. Stealth steps are quieter and slower. Audio does not change AI detection rules. No music or voiceover has been selected.

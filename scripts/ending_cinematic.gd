@@ -4,6 +4,7 @@ signal finished
 var elapsed := 0.0
 var done := false
 var level: Node
+var collapse_sounded := false
 
 func _ready() -> void:
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -16,6 +17,9 @@ func _process(delta: float) -> void:
 		queue_redraw()
 		return
 	elapsed += delta
+	if elapsed >= 7.5 and not collapse_sounded:
+		collapse_sounded = true
+		get_node("/root/SoundFX").play_sound("collapse", -18)
 	queue_redraw()
 	if elapsed >= 14:
 		finish()

@@ -1,0 +1,9 @@
+{
+  "step": "Audio/Impact Sounds/Audio/footstep_concrete_000.ogg",
+  "swing": "Audio/RPG Audio/Audio/knifeSlice.ogg",
+  "hit": "Audio/Impact Sounds/Audio/impactGeneric_light_000.ogg",
+  "gate": "Audio/RPG Audio/Audio/metalLatch.ogg",
+  "sigil": "Audio/RPG Audio/Audio/metalClick.ogg",
+  "shot": "2D assets/Desert Shooter Pack/Sounds/shoot-a.ogg",
+  "collapse": "Audio/Sci-Fi Sounds/Audio/lowFrequency_explosion_000.ogg"
+}

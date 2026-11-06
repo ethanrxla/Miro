@@ -22,6 +22,7 @@ var dodge_cooldown: float = 0.0
 var animation_time: float = 0.0
 var climbing: bool = false
 var attack_flash: float = 0.0
+var footstep_left := 0.0
 const IDLE = preload("res://assets/characters/miro_idle.png")
 const WALK = preload("res://assets/characters/miro_walk.png")
 const JUMP = preload("res://assets/characters/miro_jump.png")
@@ -76,6 +77,10 @@ func _physics_process(delta: float) -> void:
 	else:
 		velocity.y += 850.0 * delta
 	move_and_slide()
+	footstep_left = maxf(0, footstep_left - delta)
+	if is_on_floor() and absf(velocity.x) > 20 and footstep_left <= 0:
+		get_node("/root/SoundFX").play_sound("step", -25 if is_concealed else -19)
+		footstep_left = 0.5 if is_concealed else 0.32
 	if Input.is_action_just_pressed("cloak"):
 		toggle_stealth()
 	check_guard_contact()
@@ -140,6 +145,7 @@ func shank() -> void:
 	end_stealth()
 	attack_cooldown = 0.5
 	attack_flash = 0.16
+	get_node("/root/SoundFX").play_sound("swing", -18)
 	for guard in level.guards():
 		var difference: Vector2 = guard.global_position - global_position
 		if not guard.is_dead and absf(difference.y) < 24 and absf(difference.x) <= 46 and difference.x * facing >= -5:
@@ -156,6 +162,7 @@ func fire_gun() -> void:
 	ammunition -= 1
 	attack_cooldown = 0.65
 	attack_flash = 0.2
+	get_node("/root/SoundFX").play_sound("shot", -20)
 	end_stealth()
 	level.make_noise(global_position, 600.0)
 	for guard in level.guards():
@@ -171,7 +178,10 @@ func fire_gun() -> void:
 func take_damage(amount: int) -> void:
 	if dodge_left > 0:
 		return
+	var previous_health := health
 	super.take_damage(amount)
+	if health < previous_health:
+		get_node("/root/SoundFX").play_sound("hit", -16)
 	end_stealth()
 
 func die() -> void:

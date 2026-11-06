@@ -123,6 +123,7 @@ func _process(delta: float) -> void:
 		overlay_label.text = "THE TOWER KEEPS ITS PRISONERS\n\n[R] Retry from the cell\nTry cover, a quiet key theft, or dodge the wind-up."
 	elif paused:
 		overlay_label.text = "PAUSED\n\nA / D Move    Space Jump    W / S Ladders\nE Interact    C Dodge\n1 Shank    2 Stealth    3 C4    4 Gun\n\nStealth lasts 5s, slows movement, then recharges for 8s.\nGuard contact, attacks, damage or dodging reveal you.\n\n[Esc] Resume    [R] Restart"
+		overlay_label.text += "\n[M] Sound: " + ("OFF" if get_node("/root/SoundFX").muted else "ON")
 	queue_redraw()
 
 func objective() -> String:
@@ -293,6 +294,7 @@ func interact() -> void:
 			start_brother()
 			return
 		sigil_placed = true
+		get_node("/root/SoundFX").play_sound("sigil", -16)
 		player.c4_count -= 1
 		var anchor = nearby("sigil")
 		anchor.activated = true
@@ -331,10 +333,12 @@ func plant_c4() -> void:
 		route = "C4 breach"
 		open_door()
 		shot_flash = 0.4
+		get_node("/root/SoundFX").play_sound("collapse", -20)
 		make_noise(player.global_position, 700)
 		notify("The lock bursts. Keepers heard it! Find shadow or fight your way through.", 7)
 
 func open_door() -> void:
+	get_node("/root/SoundFX").play_sound("gate", -17)
 	door_open = true
 	$CellDoor/CollisionShape2D.set_deferred("disabled", true)
 	$Interactables/CellLock.activated = true

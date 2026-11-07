@@ -69,22 +69,28 @@ func run() -> void:
 		if guard.facing < 0 and guard.position.x < 575:
 			break
 		await tick()
-	if not level.player.is_concealed and level.player.stealth_cooldown_left <= 0:
-		level.player.toggle_stealth()
 	Input.action_press("jump")
 	await tick(1)
 	Input.action_release("jump")
-	await walk(660)
+	while not level.in_cover(level.player.position):
+		Input.action_press("move_right")
+		await tick()
+	if not level.player.is_concealed and level.player.stealth_cooldown_left <= 0:
+		level.player.toggle_stealth()
+	await walk(688)
 	for i in range(60):
 		if level.player.is_on_floor():
 			break
 		await tick()
-	if not level.player.is_concealed and level.player.stealth_cooldown_left <= 0:
-		level.player.toggle_stealth()
 	await tick(35)
 	level.interact()
 	level.finish_dialogue()
 	check(level.brother_heard, "Quiet route reaches mysterious voice")
+	for i in range(900):
+		var keeper = level.get_node("Guards/GalleryKeeper")
+		if keeper.alert_state == IntroGuard.State.PATROL and keeper.facing < 0:
+			break
+		await tick()
 	await walk(728)
 	Input.action_press("climb_down")
 	await tick(260)

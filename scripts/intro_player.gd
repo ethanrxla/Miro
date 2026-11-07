@@ -4,6 +4,7 @@ extends BaseCharacter
 var level: Node2D
 var facing: float = 1.0
 var is_concealed: bool = false
+@export var jump_velocity := -340.0
 @export var stealth_duration := 5.0
 @export var stealth_cooldown := 8.0
 @export_range(0.1, 1.0) var stealth_speed_multiplier := 0.55
@@ -47,7 +48,10 @@ func _physics_process(delta: float) -> void:
 	stealth_cooldown_left = maxf(0, stealth_cooldown_left - delta)
 	if is_concealed:
 		stealth_remaining = maxf(0, stealth_remaining - delta)
-		if stealth_remaining == 0:
+		if not level.in_cover(global_position):
+			end_stealth()
+			level.notify("Left shadows — cover ended.")
+		elif stealth_remaining == 0:
 			end_stealth()
 	var direction := Input.get_axis("move_left", "move_right")
 	var vertical := Input.get_axis("climb_up", "climb_down")
@@ -58,7 +62,7 @@ func _physics_process(delta: float) -> void:
 		climbing = true
 	if Input.is_action_just_pressed("jump"):
 		if is_on_floor() or climbing:
-			velocity.y = -290.0
+			velocity.y = jump_velocity
 			climbing = false
 	if direction != 0.0:
 		facing = direction
@@ -103,6 +107,8 @@ func toggle_stealth() -> void:
 		end_stealth()
 	elif stealth_cooldown_left > 0:
 		level.notify("Stealth recharging: %.1fs" % stealth_cooldown_left)
+	elif not level.in_cover(global_position):
+		level.notify("The blanket only conceals you in shadows.")
 	else:
 		is_concealed = true
 		stealth_remaining = stealth_duration
@@ -134,6 +140,8 @@ func stealth_status() -> String:
 		return "STEALTH %.1fs" % stealth_remaining
 	if stealth_cooldown_left > 0:
 		return "STEALTH %.1fs cooldown" % stealth_cooldown_left
+	if not is_instance_valid(level) or not level.in_cover(global_position):
+		return "STEALTH [2] (Find shadow)"
 	return "STEALTH READY [2]"
 
 func shank() -> void:

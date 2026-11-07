@@ -163,9 +163,15 @@ func guards() -> Array[Node]:
 	return get_tree().get_nodes_in_group("guards")
 
 func in_cover(point: Vector2) -> bool:
-	for area in areas.get_children():
-		if area.kind == "cover" and area.contains(point):
-			return true
+	var list := areas if is_instance_valid(areas) else get_node_or_null("Interactables")
+	if not list:
+		return false
+	for area in list.get_children():
+		if area.kind == "cover":
+			var rect: Rect2 = Rect2(area.global_position - area.area_size / 2, area.area_size)
+			var expanded := Rect2(rect.position.x - 6, rect.position.y - 45, rect.size.x + 12, rect.size.y + 45)
+			if expanded.has_point(point):
+				return true
 	return false
 
 func ladder_at(point: Vector2):

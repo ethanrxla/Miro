@@ -57,6 +57,10 @@ func move_to(x: float, limit: int = 500, fight: bool = false) -> bool:
 	Input.action_release("move_left")
 	Input.action_release("move_right")
 	Input.action_release("jump")
+	for i in range(40):
+		if p.is_on_floor() or p.climbing:
+			break
+		await frames(1)
 	await frames(2)
 	print("MOVE target=", x, " actual=", p.position, " hp=", p.health)
 	return absf(p.position.x - x) <= 8

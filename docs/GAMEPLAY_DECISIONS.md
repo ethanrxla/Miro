@@ -1,5 +1,20 @@
 # Current gameplay decisions
 
+## Fran playtest findings and resolutions — November 7, 2026
+
+### 1. Basic jump height increase
+Fran identified that Miro could not jump over surfaces higher than the one directly above him (specifically, 2-tile ledges 56px high, such as the block at row 14 on Level 2 *The Symptoms* blocking access to `TransferLedger` / "Read the indiscriminate transfer order").
+- `jump_velocity` was increased from `-290.0` to `-340.0` on `IntroPlayer` (`@export var jump_velocity := -340.0`).
+- Under the $850.0 \text{ px/s}^2$ gravity model, discrete maximum height increased from $47.08\text{px}$ to $65.17\text{px}$.
+- This allows Miro to reliably clear 2-tile vertical obstacles ($56\text{px}$) while remaining unable to clear 3-tile barriers ($84\text{px}$).
+
+### 2. Blanket stealth restricted to shadows
+Fran explicitly instructed that the blanket must be restricted strictly to shadows, resolving the prior handoff ambiguity between anywhere activation and shadow hiding.
+- **Activation:** Pressing **2** requires Miro to be within a shadow cover zone (`level.in_cover(global_position)`). Attempting to activate outside shadows fails with notification `"The blanket only conceals you in shadows."`, leaving stealth inactive.
+- **HUD status:** When ready but outside shadows, the HUD displays `STEALTH [2] (Find shadow)`. Inside shadows, it displays `STEALTH READY [2]`.
+- **Exit cover reveal:** Leaving shadow cover while concealed immediately ends stealth (`"Left shadows — cover ended."`) and initiates the full 8-second cooldown.
+- **Preserved rules:** Within shadow cover, the 5-second duration, 8-second cooldown, 55% movement speed, jump/climb preservation, and live-guard contact reveal rules remain in effect.
+
 ## Playtest handoff clarification — November 6, 2026
 
 Ethan reaffirmed that the blanket is the stealth tool for hiding in shadows when requesting [Fran's handoff](FRAN_PLAYTEST_HANDOFF.md). The build still supports the earlier requested timed activation anywhere. Whether shadows should become mandatory again was not explicitly specified; Fran should record this design question rather than assume the code already restricts activation. No gameplay rule was changed as part of the documentation handoff. An in-game level menu is also an outstanding deliverable; developer floor-launch shortcuts are not that menu.
